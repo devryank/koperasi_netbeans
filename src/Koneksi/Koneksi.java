@@ -17,7 +17,7 @@ public class Koneksi {
     public Connection getConnection() {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            System.out.println("Berhasil connect");
+//            System.out.println("Berhasil connect");
         }
         catch(ClassNotFoundException ex) {
             System.out.println("gagal koneksi" + ex);
@@ -25,7 +25,7 @@ public class Koneksi {
         String url = "jdbc:mysql://localhost/netbeans_koperasi";
         try {
             koneksi = DriverManager.getConnection(url, "root", "");
-            System.out.println("Berhasil koneksi ke database");
+//            System.out.println("Berhasil koneksi ke database");
         }
         catch(SQLException ex) {
             System.out.println("gagal koneksi ke database"+ ex);
