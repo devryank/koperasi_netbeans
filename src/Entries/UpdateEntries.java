@@ -135,7 +135,7 @@ private SimpleDateFormat sdf;
 
         jLabel6.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel6.setText("E-mail");
+        jLabel6.setText("Barang");
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
@@ -232,12 +232,21 @@ private SimpleDateFormat sdf;
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
-        String sql = "update entries set product_code=?, amount=?, created_at=STR_TO_DATE(?, '%Y-%m-%d') where id="+this.id+"";
         try {
+            String sqlSearchId = "SELECT product_code FROM products where name like '%"+listProducts.getSelectedItem()+"%'";
+            Statement statId = conn.createStatement();
+            ResultSet rs = statId.executeQuery(sqlSearchId);
+            String productCodeId = "";
+            if(rs.next()) {
+               productCodeId = rs.getString(1);
+            }
+            
+            String sql = "update entries set product_code=?, amount=?, created_at=STR_TO_DATE(?, '%Y-%m-%d') where id="+this.id+"";
             PreparedStatement stat = conn.prepareStatement(sql);
-            stat.setString(1, amount.getText());
+            stat.setString(1, productCodeId);
+            stat.setString(2, amount.getText());
             sdf = new SimpleDateFormat("yyyy-MM-dd");
-            stat.setString(2, sdf.format(created_at.getDate()));
+            stat.setString(3, sdf.format(created_at.getDate()));
             
             stat.executeUpdate();
             JOptionPane.showMessageDialog(null, "data berhasil diubah");    
