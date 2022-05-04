@@ -5,9 +5,12 @@
 package Transactions;
 
 import Koneksi.Koneksi;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.util.Date;
+import java.time.format.DateTimeFormatter;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -18,7 +21,7 @@ import javax.swing.table.DefaultTableModel;
 public class Add extends javax.swing.JFrame {
 private Connection conn = new Koneksi().getConnection();
 private DefaultTableModel tabmode;
-private int id = 0;
+private String product_code = "";
 
     /**
      * Creates new form Add
@@ -66,7 +69,9 @@ private int id = 0;
         tblTransactions = new javax.swing.JTable();
         txtcari = new javax.swing.JTextField();
         bcari = new javax.swing.JButton();
-        add = new javax.swing.JButton();
+        addToCart = new javax.swing.JButton();
+        amount = new javax.swing.JTextField();
+        productName = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -98,12 +103,21 @@ private int id = 0;
             }
         });
 
-        add.setText("Tambah ke Keranjang");
-        add.addActionListener(new java.awt.event.ActionListener() {
+        addToCart.setText("Tambah ke Keranjang");
+        addToCart.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                addActionPerformed(evt);
+                addToCartActionPerformed(evt);
             }
         });
+
+        amount.setToolTipText("Jumlah");
+        amount.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                amountActionPerformed(evt);
+            }
+        });
+
+        productName.setText("Nama Produk");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -120,7 +134,12 @@ private int id = 0;
                                 .addComponent(txtcari, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(bcari))
-                            .addComponent(add, javax.swing.GroupLayout.Alignment.TRAILING))))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(productName)
+                                .addGap(18, 18, 18)
+                                .addComponent(amount, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(addToCart)))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -133,7 +152,10 @@ private int id = 0;
                 .addGap(18, 18, 18)
                 .addComponent(tblProducts, javax.swing.GroupLayout.DEFAULT_SIZE, 241, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(add)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(addToCart)
+                    .addComponent(amount, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(productName))
                 .addGap(18, 18, 18))
         );
 
@@ -144,11 +166,19 @@ private int id = 0;
         int row = tblTransactions.rowAtPoint(evt.getPoint());
         int col = tblTransactions.columnAtPoint(evt.getPoint());
         try {
-            id = Integer.valueOf((String) tblTransactions.getModel().getValueAt(row, col));
-
+            product_code = (String) tblTransactions.getModel().getValueAt(row, col);
+            
+            String sqlSearchId = "SELECT name FROM products where product_code = '"+product_code+"'";
+            Statement statId = conn.createStatement();
+            ResultSet rs = statId.executeQuery(sqlSearchId);
+            if(rs.next()) {
+               productName.setText(rs.getString("name"));
+            } else {
+                productName.setText("Error");
+            }
         }
-        catch(NumberFormatException e) {
-            id = 0;
+        catch(NumberFormatException | SQLException e) {
+            product_code = "";
             System.out.println(e);
         }
     }//GEN-LAST:event_tblTransactionsMouseClicked
@@ -157,11 +187,60 @@ private int id = 0;
         datatable();
     }//GEN-LAST:event_bcariActionPerformed
 
-    private void addActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addActionPerformed
-        Add add = new Add();
-        add.setVisible(true);
-        dispose();
-    }//GEN-LAST:event_addActionPerformed
+    private void addToCartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addToCartActionPerformed
+        if(product_code != "" && amount.getText() != "" && productName.getText() != "Error") {
+//            get last invoice id
+            try {
+            String sqlLastInvoiceId = "SELECT inv_id FROM transactions order by inv_id desc limit 1";
+            Statement statLastInvoiceId = conn.createStatement();
+            ResultSet rs = statLastInvoiceId.executeQuery(sqlLastInvoiceId);
+            String lastInvoice = "";
+            if(rs.next()) {
+              lastInvoice = rs.getString("inv_id");
+              lastInvoice = lastInvoice.substring(lastInvoice.lastIndexOf("-") + 1);
+            }
+            
+            if(lastInvoice != "") {
+                DateTimeFormatter dtf = DateTimeFormatter.ofPattern("ddMMyyyy");
+                LocalDateTime now = LocalDateTime.now();
+                String dateLastOrder = lastInvoice.substring(0, 8);
+                // jika ada order di hari yang sama
+                int orderToday = 0;
+                if(dateLastOrder.equals(dtf.format(now))) {
+                    if(lastInvoice.indexOf("0", 9) > 0) {
+                        System.out.println("puluhan");
+                    } else if(lastInvoice.indexOf("0", 8) > 0) {
+                        System.out.println("ratusan");
+                    }
+                    
+//                    orderToday = Integer.valueOf(lastInvoice.substring(lastInvoice.length() - 1));
+                }
+//                System.out.println(String.format("%03d", orderToday));
+                
+            }
+//            String sql = "insert into transactions values(?,?,?,?,?)";
+//            PreparedStatement stat = conn.prepareStatement(sql);
+//            stat.setString(1, );
+//            stat.setInt(2, typeId);
+//            stat.setString(3, name.getText());
+//            stat.setString(4, gambar);
+//            stat.setString(5, price.getText());
+//
+//            stat.executeUpdate();
+//            JOptionPane.showMessageDialog(null, "data berhasil disimpan");
+            }
+            catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "data gagal disimpan"+e);
+            }
+        }
+//        Add add = new Add();
+//        add.setVisible(true);
+//        dispose();
+    }//GEN-LAST:event_addToCartActionPerformed
+
+    private void amountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_amountActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_amountActionPerformed
 
     /**
      * @param args the command line arguments
@@ -199,8 +278,10 @@ private int id = 0;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton add;
+    private javax.swing.JButton addToCart;
+    private javax.swing.JTextField amount;
     private javax.swing.JButton bcari;
+    private javax.swing.JLabel productName;
     private javax.swing.JScrollPane tblProducts;
     private javax.swing.JTable tblTransactions;
     private javax.swing.JTextField txtcari;
