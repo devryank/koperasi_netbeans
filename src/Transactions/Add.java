@@ -15,42 +15,37 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author ryans
  */
-public class Form extends javax.swing.JFrame {
+public class Add extends javax.swing.JFrame {
 private Connection conn = new Koneksi().getConnection();
 private DefaultTableModel tabmode;
 private int id = 0;
 
     /**
-     * Creates new form Form
+     * Creates new form Add
      */
-    public Form() {
+    public Add() {
         initComponents();
         setLocationRelativeTo(this);
         datatable();
     }
-    
-    protected void datatable() {
+ protected void datatable() {
         Object[] Baris = {
-            "Invoice", 
-            "Tipe",
-            "Produk",
-            "Jumlah",
+            "Kode", 
+            "Nama",
             "Harga",
         };
         tabmode = new DefaultTableModel(null, Baris);
         String cariitem = txtcari.getText();
         
         try {
-            String sql = "SELECT t.*, tt.name as type_name, p.name as product_name from transactions t INNER JOIN transaction_types tt ON t.type_id = tt.id INNER JOIN products p ON t.product_id = p.product_code where (t.inv_id like '%"+cariitem+"%' or p.name like '%"+cariitem+"%') AND t.is_done = '0' order by t.created_at asc";
+            String sql = "SELECT * FROM products where product_code like '%"+cariitem+"%' or name like '%"+cariitem+"%' order by product_code asc";
             Statement stat = conn.createStatement();
             ResultSet hasil = stat.executeQuery(sql);
             while(hasil.next()) {
                 tabmode.addRow(new Object[] {
-                    hasil.getString("inv_id"),
-                    hasil.getString("type_name"),
-                    hasil.getString("product_name"),
-                    hasil.getString("amount"),
-                    hasil.getString("total"),
+                    hasil.getString("product_code"),
+                    hasil.getString("name"),
+                    hasil.getString("price"),
                 });
             }
             tblTransactions.setModel(tabmode);
@@ -67,22 +62,13 @@ private int id = 0;
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        add = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
+        tblProducts = new javax.swing.JScrollPane();
         tblTransactions = new javax.swing.JTable();
         txtcari = new javax.swing.JTextField();
         bcari = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
-        totalHarga = new javax.swing.JLabel();
+        add = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        add.setText("Tambah");
-        add.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                addActionPerformed(evt);
-            }
-        });
 
         tblTransactions.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -100,7 +86,7 @@ private int id = 0;
                 tblTransactionsMouseClicked(evt);
             }
         });
-        jScrollPane1.setViewportView(tblTransactions);
+        tblProducts.setViewportView(tblTransactions);
 
         txtcari.setName("txtcari"); // NOI18N
 
@@ -112,9 +98,12 @@ private int id = 0;
             }
         });
 
-        jLabel1.setText("Total");
-
-        totalHarga.setText("Harga");
+        add.setText("Tambah ke Keranjang");
+        add.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -123,44 +112,33 @@ private int id = 0;
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(add)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(txtcari, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(bcari))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 632, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(totalHarga)))
+                    .addComponent(tblProducts, javax.swing.GroupLayout.DEFAULT_SIZE, 583, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(txtcari, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(bcari))
+                            .addComponent(add, javax.swing.GroupLayout.Alignment.TRAILING))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(47, 47, 47)
+                .addGap(32, 32, 32)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(add)
                     .addComponent(txtcari, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(bcari))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(tblProducts, javax.swing.GroupLayout.DEFAULT_SIZE, 241, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(totalHarga))
-                .addContainerGap(62, Short.MAX_VALUE))
+                .addComponent(add)
+                .addGap(18, 18, 18))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void addActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addActionPerformed
-        Add add = new Add();
-        add.setVisible(true);
-        dispose();
-    }//GEN-LAST:event_addActionPerformed
 
     private void tblTransactionsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblTransactionsMouseClicked
         int row = tblTransactions.rowAtPoint(evt.getPoint());
@@ -173,12 +151,17 @@ private int id = 0;
             id = 0;
             System.out.println(e);
         }
-
     }//GEN-LAST:event_tblTransactionsMouseClicked
 
     private void bcariActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bcariActionPerformed
         datatable();
     }//GEN-LAST:event_bcariActionPerformed
+
+    private void addActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addActionPerformed
+        Add add = new Add();
+        add.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_addActionPerformed
 
     /**
      * @param args the command line arguments
@@ -197,20 +180,20 @@ private int id = 0;
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Form.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Add.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Form.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Add.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Form.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Add.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Form.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Add.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Form().setVisible(true);
+                new Add().setVisible(true);
             }
         });
     }
@@ -218,10 +201,8 @@ private int id = 0;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton add;
     private javax.swing.JButton bcari;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane tblProducts;
     private javax.swing.JTable tblTransactions;
-    private javax.swing.JLabel totalHarga;
     private javax.swing.JTextField txtcari;
     // End of variables declaration//GEN-END:variables
 }
