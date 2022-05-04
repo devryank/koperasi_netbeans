@@ -35,6 +35,7 @@ private String id = "";
         Object[] Baris = {
             "Kode Produk", 
             "Nama",
+            "Jenis",
             "Foto",
             "Harga",
         };
@@ -42,13 +43,14 @@ private String id = "";
         String cariitem = txtcari.getText();
         
         try {
-            String sql = "SELECT * from products where product_code like '%"+cariitem+"%' or name like '%"+cariitem+"%' order by product_code asc";
+            String sql = "SELECT p.*, tt.name as type_name from products p INNER JOIN transaction_types tt ON p.type_id = tt.id where p.product_code like '%"+cariitem+"%' or p.name like '%"+cariitem+"%' order by p.product_code asc";
             Statement stat = conn.createStatement();
             ResultSet hasil = stat.executeQuery(sql);
             while(hasil.next()) {
                 tabmode.addRow(new Object[] {
                     hasil.getString("product_code"),
                     hasil.getString("name"),
+                    hasil.getString("type_name"),
                     hasil.getString("image"),
                     hasil.getString("price"),
                 });
