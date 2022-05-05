@@ -229,9 +229,9 @@ private int typeId, total, price = 0;
                 JOptionPane.showMessageDialog(null, "data gagal disimpan"+e);
             }
         }
-//        Add add = new Add();
-//        add.setVisible(true);
-//        dispose();
+        Form form = new Form();
+        form.setVisible(true);
+        dispose();
     }//GEN-LAST:event_addToCartActionPerformed
 
     private void amountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_amountActionPerformed
