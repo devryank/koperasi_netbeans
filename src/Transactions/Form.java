@@ -5,11 +5,12 @@
 package Transactions;
 
 import Koneksi.Koneksi;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.*;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 
 /**
  *
@@ -19,6 +20,7 @@ public class Form extends javax.swing.JFrame {
 private Connection conn = new Koneksi().getConnection();
 private DefaultTableModel tabmode;
 private int id = 0;
+private String inv_id = "";
 
     /**
      * Creates new form Form
@@ -27,11 +29,34 @@ private int id = 0;
         initComponents();
         setLocationRelativeTo(this);
         datatable();
+        
+        try {
+            
+        String sql = "SELECT SUM(total) as totalHarga from transactions where is_done = '0'";
+            Statement stat = conn.createStatement();
+            ResultSet hasil = stat.executeQuery(sql);
+            
+            while(hasil.next()) {
+                Double total = Double.parseDouble(hasil.getString("totalHarga"));
+                
+                DecimalFormat kursIndonesia = (DecimalFormat) DecimalFormat.getCurrencyInstance();
+                DecimalFormatSymbols formatRp = new DecimalFormatSymbols();
+
+                formatRp.setCurrencySymbol("Rp.");
+                formatRp.setGroupingSeparator('.');
+                formatRp.setMonetaryDecimalSeparator(',');
+
+                kursIndonesia.setDecimalFormatSymbols(formatRp);
+                totalHarga.setText(kursIndonesia.format(total));
+            }            
+        } catch(Exception e) {
+            JOptionPane.showMessageDialog(null, "data gagal dipanggil"+e);
+        }  
+
     }
     
     protected void datatable() {
         Object[] Baris = {
-            "Invoice", 
             "Tipe",
             "Produk",
             "Jumlah",
@@ -41,12 +66,15 @@ private int id = 0;
         String cariitem = txtcari.getText();
         
         try {
-            String sql = "SELECT t.*, tt.name as type_name, p.name as product_name from transactions t INNER JOIN transaction_types tt ON t.type_id = tt.id INNER JOIN products p ON t.product_id = p.product_code where (t.inv_id like '%"+cariitem+"%' or p.name like '%"+cariitem+"%') AND t.is_done = '0' order by t.created_at asc";
+            String sql = "SELECT t.*, tt.name as type_name, p.name as product_name from transactions t INNER JOIN "
+                    + "transaction_types tt ON t.type_id = tt.id INNER JOIN products p ON t.product_code = p.product_code "
+                    + "where (t.inv_id like '%"+cariitem+"%' or p.name like '%"+cariitem+"%') AND t.is_done = '0' "
+                    + "order by t.created_at asc";
             Statement stat = conn.createStatement();
             ResultSet hasil = stat.executeQuery(sql);
             while(hasil.next()) {
+                inv_id = hasil.getString("inv_id");
                 tabmode.addRow(new Object[] {
-                    hasil.getString("inv_id"),
                     hasil.getString("type_name"),
                     hasil.getString("product_name"),
                     hasil.getString("amount"),
@@ -74,6 +102,7 @@ private int id = 0;
         bcari = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         totalHarga = new javax.swing.JLabel();
+        btnConfirm = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -116,6 +145,13 @@ private int id = 0;
 
         totalHarga.setText("Harga");
 
+        btnConfirm.setText("Konfirmasi Pembayaran");
+        btnConfirm.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnConfirmActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -133,7 +169,10 @@ private int id = 0;
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(totalHarga)))
+                        .addComponent(totalHarga))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btnConfirm)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -150,7 +189,9 @@ private int id = 0;
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(totalHarga))
-                .addContainerGap(62, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(btnConfirm)
+                .addContainerGap(20, Short.MAX_VALUE))
         );
 
         pack();
@@ -179,6 +220,21 @@ private int id = 0;
     private void bcariActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bcariActionPerformed
         datatable();
     }//GEN-LAST:event_bcariActionPerformed
+
+    private void btnConfirmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmActionPerformed
+        String sql = "update transactions set is_done=? where inv_id = '"+inv_id+"'";
+        try {
+            PreparedStatement stat = conn.prepareStatement(sql);
+            stat.setString(1, "1");
+            
+            stat.executeUpdate();
+            JOptionPane.showMessageDialog(null, "Transaksi telah berhasil!");    
+        }
+        catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Transaksi gagal! "+e);
+        }
+        datatable();
+    }//GEN-LAST:event_btnConfirmActionPerformed
 
     /**
      * @param args the command line arguments
@@ -218,6 +274,7 @@ private int id = 0;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton add;
     private javax.swing.JButton bcari;
+    private javax.swing.JButton btnConfirm;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tblTransactions;
