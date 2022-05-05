@@ -22,6 +22,7 @@ public class Add extends javax.swing.JFrame {
 private Connection conn = new Koneksi().getConnection();
 private DefaultTableModel tabmode;
 private String product_code = "";
+private int typeId, total, price = 0;
 
     /**
      * Creates new form Add
@@ -35,23 +36,25 @@ private String product_code = "";
         Object[] Baris = {
             "Kode", 
             "Nama",
+            "Jenis",
             "Harga",
         };
         tabmode = new DefaultTableModel(null, Baris);
         String cariitem = txtcari.getText();
         
         try {
-            String sql = "SELECT * FROM products where product_code like '%"+cariitem+"%' or name like '%"+cariitem+"%' order by product_code asc";
+            String sql = "SELECT p.*, tt.name as type_name from products p INNER JOIN transaction_types tt ON p.type_id = tt.id where p.product_code like '%"+cariitem+"%' or p.name like '%"+cariitem+"%' order by p.product_code asc";
             Statement stat = conn.createStatement();
             ResultSet hasil = stat.executeQuery(sql);
             while(hasil.next()) {
                 tabmode.addRow(new Object[] {
                     hasil.getString("product_code"),
                     hasil.getString("name"),
+                    hasil.getString("type_name"),
                     hasil.getString("price"),
                 });
             }
-            tblTransactions.setModel(tabmode);
+            tblProducts.setModel(tabmode);
         } catch(Exception e) {
             JOptionPane.showMessageDialog(null, "data gagal dipanggil"+e);
         }       
@@ -65,8 +68,8 @@ private String product_code = "";
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        tblProducts = new javax.swing.JScrollPane();
-        tblTransactions = new javax.swing.JTable();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tblProducts = new javax.swing.JTable();
         txtcari = new javax.swing.JTextField();
         bcari = new javax.swing.JButton();
         addToCart = new javax.swing.JButton();
@@ -75,7 +78,7 @@ private String product_code = "";
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        tblTransactions.setModel(new javax.swing.table.DefaultTableModel(
+        tblProducts.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -86,12 +89,12 @@ private String product_code = "";
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        tblTransactions.addMouseListener(new java.awt.event.MouseAdapter() {
+        tblProducts.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tblTransactionsMouseClicked(evt);
+                tblProductsMouseClicked(evt);
             }
         });
-        tblProducts.setViewportView(tblTransactions);
+        jScrollPane1.setViewportView(tblProducts);
 
         txtcari.setName("txtcari"); // NOI18N
 
@@ -126,7 +129,7 @@ private String product_code = "";
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(tblProducts, javax.swing.GroupLayout.DEFAULT_SIZE, 583, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 583, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -150,7 +153,7 @@ private String product_code = "";
                     .addComponent(txtcari, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(bcari))
                 .addGap(18, 18, 18)
-                .addComponent(tblProducts, javax.swing.GroupLayout.DEFAULT_SIZE, 241, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 241, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(addToCart)
@@ -162,27 +165,6 @@ private String product_code = "";
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void tblTransactionsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblTransactionsMouseClicked
-        int row = tblTransactions.rowAtPoint(evt.getPoint());
-        int col = tblTransactions.columnAtPoint(evt.getPoint());
-        try {
-            product_code = (String) tblTransactions.getModel().getValueAt(row, col);
-            
-            String sqlSearchId = "SELECT name FROM products where product_code = '"+product_code+"'";
-            Statement statId = conn.createStatement();
-            ResultSet rs = statId.executeQuery(sqlSearchId);
-            if(rs.next()) {
-               productName.setText(rs.getString("name"));
-            } else {
-                productName.setText("Error");
-            }
-        }
-        catch(NumberFormatException | SQLException e) {
-            product_code = "";
-            System.out.println(e);
-        }
-    }//GEN-LAST:event_tblTransactionsMouseClicked
-
     private void bcariActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bcariActionPerformed
         datatable();
     }//GEN-LAST:event_bcariActionPerformed
@@ -191,43 +173,57 @@ private String product_code = "";
         if(product_code != "" && amount.getText() != "" && productName.getText() != "Error") {
 //            get last invoice id
             try {
-            String sqlLastInvoiceId = "SELECT inv_id FROM transactions order by inv_id desc limit 1";
-            Statement statLastInvoiceId = conn.createStatement();
-            ResultSet rs = statLastInvoiceId.executeQuery(sqlLastInvoiceId);
-            String lastInvoice = "";
-            if(rs.next()) {
-              lastInvoice = rs.getString("inv_id");
-              lastInvoice = lastInvoice.substring(lastInvoice.lastIndexOf("-") + 1);
-            }
-            
-            if(lastInvoice != "") {
+                String sqlLastInvoiceId = "SELECT inv_id, is_done FROM transactions order by created_at desc limit 1";
+                Statement statLastInvoiceId = conn.createStatement();
+                ResultSet rs = statLastInvoiceId.executeQuery(sqlLastInvoiceId);
+                String lastInvoice = "";
+                String is_done = "";
+                if(rs.next()) {
+                  lastInvoice = rs.getString("inv_id");
+                  lastInvoice = lastInvoice.substring(lastInvoice.lastIndexOf("-") + 1);
+                  is_done = rs.getString("is_done");
+                }
+
+                int orderToday = 0;
+                String orderNow = "";
+                String invNow = "";
                 DateTimeFormatter dtf = DateTimeFormatter.ofPattern("ddMMyyyy");
                 LocalDateTime now = LocalDateTime.now();
-                String dateLastOrder = lastInvoice.substring(0, 8);
-                // jika ada order di hari yang sama
-                int orderToday = 0;
-                if(dateLastOrder.equals(dtf.format(now))) {
-                    if(lastInvoice.indexOf("0", 9) > 0) {
-                        System.out.println("puluhan");
-                    } else if(lastInvoice.indexOf("0", 8) > 0) {
-                        System.out.println("ratusan");
-                    }
-                    
-//                    orderToday = Integer.valueOf(lastInvoice.substring(lastInvoice.length() - 1));
-                }
-//                System.out.println(String.format("%03d", orderToday));
                 
-            }
-//            String sql = "insert into transactions values(?,?,?,?,?)";
-//            PreparedStatement stat = conn.prepareStatement(sql);
-//            stat.setString(1, );
-//            stat.setInt(2, typeId);
-//            stat.setString(3, name.getText());
-//            stat.setString(4, gambar);
-//            stat.setString(5, price.getText());
-//
-//            stat.executeUpdate();
-//            JOptionPane.showMessageDialog(null, "data berhasil disimpan");
+                if(lastInvoice != "") {
+                    String dateLastOrder = lastInvoice.substring(0, 8);
+//                    jika tanggal transaksi terakhir sama dengan transaksi hari ini
+                    if(dateLastOrder.equals(dtf.format(now))) {                        
+//                      jika transaksi terakhir sudah selesai maka buat invoice + 1
+                        if(is_done.equals("1")) {
+                        orderToday = Integer.valueOf(lastInvoice.substring(lastInvoice.length() - 3));
+                        orderNow = String.format("%03d", orderToday+1);
+                        invNow = "INV-" + dateLastOrder + orderNow;
+
+                        } else {
+    //                      jika transaksi terakhir belum selesai
+                            orderToday = Integer.valueOf(lastInvoice.substring(lastInvoice.length() - 3));
+                            orderNow = String.format("%03d", orderToday);
+                            invNow = "INV-" + dateLastOrder + orderNow;
+                        }
+                    } else {
+                        // jika tanggal transaksi terakhir tidak sama dengan transaksi hari ini
+                        invNow = "INV-" + dtf.format(now) + "001";
+                    }   
+                } else {
+                    invNow = "INV-" + dtf.format(now) + "001";
+                }
+                String sql = "insert into transactions values(0,?,?,?,?,?,?,NOW())";
+                PreparedStatement stat = conn.prepareStatement(sql);
+                stat.setString(1, invNow);
+                stat.setInt(2, typeId);
+                stat.setString(3, product_code);
+                stat.setString(4, amount.getText());
+                stat.setInt(5, Integer.parseInt(amount.getText()) * price);
+                stat.setString(6, "0");
+
+                stat.executeUpdate();
+                JOptionPane.showMessageDialog(null, "data berhasil disimpan");
             }
             catch (SQLException e) {
                 JOptionPane.showMessageDialog(null, "data gagal disimpan"+e);
@@ -241,6 +237,29 @@ private String product_code = "";
     private void amountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_amountActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_amountActionPerformed
+
+    private void tblProductsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblProductsMouseClicked
+        int row = tblProducts.rowAtPoint(evt.getPoint());
+        int col = tblProducts.columnAtPoint(evt.getPoint());
+        try {
+            product_code = (String) tblProducts.getModel().getValueAt(row, col);
+
+            String sqlSearchId = "SELECT product_code, name, type_id, price FROM products where product_code = '"+product_code+"'";
+            Statement statId = conn.createStatement();
+            ResultSet rs = statId.executeQuery(sqlSearchId);
+            if(rs.next()) {
+                productName.setText(rs.getString("name"));
+                typeId = rs.getInt("type_id");
+                price = rs.getInt("price");
+            } else {
+                productName.setText("Error");
+            }
+        }
+        catch(NumberFormatException | SQLException e) {
+            product_code = "";
+            System.out.println(e);
+        }
+    }//GEN-LAST:event_tblProductsMouseClicked
 
     /**
      * @param args the command line arguments
@@ -281,9 +300,9 @@ private String product_code = "";
     private javax.swing.JButton addToCart;
     private javax.swing.JTextField amount;
     private javax.swing.JButton bcari;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel productName;
-    private javax.swing.JScrollPane tblProducts;
-    private javax.swing.JTable tblTransactions;
+    private javax.swing.JTable tblProducts;
     private javax.swing.JTextField txtcari;
     // End of variables declaration//GEN-END:variables
 }
