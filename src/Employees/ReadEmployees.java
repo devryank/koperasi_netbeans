@@ -34,10 +34,9 @@ private int id = 0;
     protected void datatable() {
         Object[] Baris = {
             "ID", 
-            "Posisi",
+            "Jabatan",
             "Nama",
             "Email",
-            "Foto",
             "Alamat",
             "No HP",
             "Jenis Kelamin",
@@ -46,16 +45,15 @@ private int id = 0;
         String cariitem = txtcari.getText();
         
         try {
-            String sql = "SELECT employees.id as id, roles.name as role_name, employees.name as employee_name, email, photo, address, phone, gender FROM employees INNER JOIN roles ON roles.id = employees.position_id where employees.id like '%"+cariitem+"%' or employees.name like '%"+cariitem+"%' order by employees.id asc";
+            String sql = "SELECT * FROM employees where id like '%"+cariitem+"%' or name like '%"+cariitem+"%' order by id asc";
             Statement stat = conn.createStatement();
             ResultSet hasil = stat.executeQuery(sql);
             while(hasil.next()) {
                 tabmode.addRow(new Object[] {
                     hasil.getString("id"),
-                    hasil.getString("role_name"),
-                    hasil.getString("employee_name"),
+                    hasil.getString("role"),
+                    hasil.getString("name"),
                     hasil.getString("email"),
-                    hasil.getString("photo"),
                     hasil.getString("address"),
                     hasil.getString("phone"),
                     hasil.getString("gender"),

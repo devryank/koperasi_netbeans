@@ -43,7 +43,7 @@ private int id = 0;
         this.id = id;
 //      Get specific employee
         try {
-            String getEmployeeById = "SELECT position_id, name, email, password, photo, address, phone, gender FROM employees where id like '%"+id+"%'";
+            String getEmployeeById = "SELECT * FROM employees where id like '%"+id+"%'";
             Statement stat = conn.createStatement();
             ResultSet rsGetEmployeeById = stat.executeQuery(getEmployeeById);
             if(rsGetEmployeeById.next()) {
@@ -52,12 +52,12 @@ private int id = 0;
                 txtPassword.setText(rsGetEmployeeById.getString("password"));
                 txtAddress.setText(rsGetEmployeeById.getString("address"));
                 txtPhone.setText(rsGetEmployeeById.getString("phone"));
-                if(rsGetEmployeeById.getString("gender") == "laki-laki") {
+                if(rsGetEmployeeById.getString("gender").equals("laki-laki")) {
                     radioMale.setSelected(true);
                 } else {
-                    System.out.println(rsGetEmployeeById.getString("gender"));
                     radioFemale.setSelected(true);
                 }
+                listRole.setSelectedItem(rsGetEmployeeById.getString("role"));
             }
         } catch(Exception e) {
             JOptionPane.showMessageDialog(null, "data gagal dipanggil"+e);
@@ -73,6 +73,7 @@ private int id = 0;
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroup1 = new javax.swing.ButtonGroup();
         jPanel2 = new javax.swing.JPanel();
         btnSave = new javax.swing.JButton();
         btnBatal = new javax.swing.JButton();
@@ -91,6 +92,8 @@ private int id = 0;
         jScrollPane1 = new javax.swing.JScrollPane();
         txtAddress = new javax.swing.JTextArea();
         txtPhone = new javax.swing.JTextField();
+        listRole = new javax.swing.JComboBox<>();
+        jLabel5 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -136,6 +139,7 @@ private int id = 0;
         jLabel10.setForeground(new java.awt.Color(255, 255, 255));
         jLabel10.setText("Password");
 
+        buttonGroup1.add(radioMale);
         radioMale.setText("Laki-Laki");
 
         jLabel8.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
@@ -149,6 +153,7 @@ private int id = 0;
             }
         });
 
+        buttonGroup1.add(radioFemale);
         radioFemale.setText("Perempuan");
 
         jLabel9.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
@@ -179,14 +184,18 @@ private int id = 0;
             }
         });
 
+        listRole.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "admin", "employee" }));
+
+        jLabel5.setText("Jabatan");
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+            .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 657, Short.MAX_VALUE)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(37, 37, 37)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -204,21 +213,25 @@ private int id = 0;
                                         .addComponent(radioMale)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                         .addComponent(radioFemale))
-                                    .addComponent(txtPhone, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(141, 359, Short.MAX_VALUE))
+                                    .addComponent(txtPhone, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel9)
-                                    .addComponent(jLabel10))
+                                    .addComponent(jLabel10)
+                                    .addComponent(jLabel5))
                                 .addGap(47, 47, 47)
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(jPanel2Layout.createSequentialGroup()
-                                        .addComponent(btnSave)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(btnBatal)))
-                                .addGap(0, 0, Short.MAX_VALUE)))))
+                                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                                .addComponent(btnSave)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                .addComponent(btnBatal)))
+                                        .addGap(0, 0, Short.MAX_VALUE))
+                                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addComponent(listRole, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)))))))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -251,11 +264,15 @@ private int id = 0;
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel10)
                     .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(27, 27, 27)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(listRole, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnSave)
                     .addComponent(btnBatal))
-                .addContainerGap(43, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -268,9 +285,7 @@ private int id = 0;
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 415, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 6, Short.MAX_VALUE))
+            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 421, Short.MAX_VALUE)
         );
 
         pack();
@@ -283,7 +298,7 @@ private int id = 0;
         } else if(radioFemale.isSelected()) {
             txtGender = "perempuan";
         }
-        String sql = "update employees set name=?, email=?, password=?, address=?, phone=?, gender=? where id="+this.id+"";
+        String sql = "update employees set name=?, email=?, password=?, address=?, phone=?, gender=?, role=? where id="+this.id+"";
         try {
             PreparedStatement stat = conn.prepareStatement(sql);
             stat.setString(1, txtName.getText());
@@ -292,6 +307,7 @@ private int id = 0;
             stat.setString(4, txtAddress.getText());
             stat.setString(5, txtPhone.getText());
             stat.setString(6, txtGender);
+            stat.setString(7, listRole.getSelectedItem().toString());
             
             stat.executeUpdate();
             JOptionPane.showMessageDialog(null, "data berhasil diubah");    
@@ -365,15 +381,18 @@ private int id = 0;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBatal;
     private javax.swing.JButton btnSave;
+    private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JComboBox<String> listRole;
     private javax.swing.JRadioButton radioFemale;
     private javax.swing.JRadioButton radioMale;
     private javax.swing.JTextArea txtAddress;
