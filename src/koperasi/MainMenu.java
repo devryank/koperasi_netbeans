@@ -159,7 +159,7 @@ public class MainMenu extends javax.swing.JFrame {
     }//GEN-LAST:event_menuProductsActionPerformed
 
     private void menuTransactionTypesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuTransactionTypesActionPerformed
-        if(Session.getRole() != null || Session.getRole().equals("admin")) {
+        if(Session.getRole().equals("admin")) {
             ReadTransactionTypes transactionTypes = new ReadTransactionTypes();
             transactionTypes.setVisible(true);
             dispose();
@@ -193,7 +193,7 @@ public class MainMenu extends javax.swing.JFrame {
     }//GEN-LAST:event_menuProductsMouseClicked
 
     private void menuEmployeesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuEmployeesActionPerformed
-        if(Session.getRole() != null || Session.getRole().equals("admin")) {
+        if(Session.getRole().equals("admin")) {
             ReadEmployees employees = new ReadEmployees();
             employees.setVisible(true);
             dispose();
