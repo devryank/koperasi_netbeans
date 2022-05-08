@@ -72,7 +72,6 @@
             <Property name="text" type="java.lang.String" value="Absen"/>
           </Properties>
           <Events>
-            <EventHandler event="menuKeyPressed" listener="javax.swing.event.MenuKeyListener" parameters="javax.swing.event.MenuKeyEvent" handler="menuAttendancesMenuKeyPressed"/>
             <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="menuAttendancesMouseClicked"/>
           </Events>
         </Menu>

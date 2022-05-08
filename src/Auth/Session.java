@@ -12,6 +12,7 @@ package Auth;
 public class Session {
     private static String id;
     private static String name;
+    private static String role;
     
     public static String getId() {
         return id;
@@ -21,11 +22,19 @@ public class Session {
         return name;
     }
     
+    public static String getRole() {
+        return role;
+    }
+    
     public static void setId(String id) {
         Session.id = id;
     }
     
     public static void setName(String name) {
         Session.name = name;
+    }
+    
+    public static void setRole(String role) {
+        Session.role = role;
     }
 }

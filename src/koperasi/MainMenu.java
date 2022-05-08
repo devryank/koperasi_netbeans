@@ -13,6 +13,7 @@ import Exits.ReadExits;
 import Products.ReadProducts;
 import Transaction.Types.ReadTransactionTypes;
 import Transactions.Form;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -24,8 +25,15 @@ public class MainMenu extends javax.swing.JFrame {
      * Creates new form MainMenu
      */
     public MainMenu() {
-        initComponents();
-        setLocationRelativeTo(this);
+        if(Session.getRole() == null) {
+            JOptionPane.showMessageDialog(null, "Silahkan login terlebih dahulu"); 
+            Login login = new Login();
+            dispose();
+            login.setVisible(true);
+        } else {
+            initComponents();
+            setLocationRelativeTo(this);
+        }
     }
 
     /**
@@ -113,15 +121,6 @@ public class MainMenu extends javax.swing.JFrame {
         jMenuBar2.add(jMenu4);
 
         menuAttendances.setText("Absen");
-        menuAttendances.addMenuKeyListener(new javax.swing.event.MenuKeyListener() {
-            public void menuKeyPressed(javax.swing.event.MenuKeyEvent evt) {
-                menuAttendancesMenuKeyPressed(evt);
-            }
-            public void menuKeyReleased(javax.swing.event.MenuKeyEvent evt) {
-            }
-            public void menuKeyTyped(javax.swing.event.MenuKeyEvent evt) {
-            }
-        });
         menuAttendances.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 menuAttendancesMouseClicked(evt);
@@ -160,15 +159,23 @@ public class MainMenu extends javax.swing.JFrame {
     }//GEN-LAST:event_menuProductsActionPerformed
 
     private void menuTransactionTypesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuTransactionTypesActionPerformed
-        ReadTransactionTypes transactionTypes = new ReadTransactionTypes();
-        transactionTypes.setVisible(true);
-        dispose();
+        if(Session.getRole() != null || Session.getRole().equals("admin")) {
+            ReadTransactionTypes transactionTypes = new ReadTransactionTypes();
+            transactionTypes.setVisible(true);
+            dispose();
+        } else {
+            JOptionPane.showMessageDialog(null, "Akses tidak diizinkan");
+        }
     }//GEN-LAST:event_menuTransactionTypesActionPerformed
 
     private void menuAttendancesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuAttendancesMouseClicked
-        Today today = new Today();
-        today.setVisible(true);
-        dispose();
+        if(Session.getRole().equals("admin")){
+            Today today = new Today();
+            today.setVisible(true);
+            dispose();
+        } else {
+            JOptionPane.showMessageDialog(null, "Akses tidak diizinkan");   
+        }
     }//GEN-LAST:event_menuAttendancesMouseClicked
 
     private void menuLogoutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuLogoutMouseClicked
@@ -179,10 +186,6 @@ public class MainMenu extends javax.swing.JFrame {
         login.setVisible(true);
     }//GEN-LAST:event_menuLogoutMouseClicked
 
-    private void menuAttendancesMenuKeyPressed(javax.swing.event.MenuKeyEvent evt) {//GEN-FIRST:event_menuAttendancesMenuKeyPressed
-
-    }//GEN-LAST:event_menuAttendancesMenuKeyPressed
-
     private void menuProductsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuProductsMouseClicked
 //        ReadProducts products = new ReadProducts();
 //        products.setVisible(true);
@@ -190,9 +193,13 @@ public class MainMenu extends javax.swing.JFrame {
     }//GEN-LAST:event_menuProductsMouseClicked
 
     private void menuEmployeesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuEmployeesActionPerformed
-        ReadEmployees employees = new ReadEmployees();
-        employees.setVisible(true);
-        dispose();
+        if(Session.getRole() != null || Session.getRole().equals("admin")) {
+            ReadEmployees employees = new ReadEmployees();
+            employees.setVisible(true);
+            dispose();
+        } else {
+            JOptionPane.showMessageDialog(null, "Akses tidak diizinkan");
+        }
     }//GEN-LAST:event_menuEmployeesActionPerformed
 
     private void menuTransactionsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuTransactionsActionPerformed

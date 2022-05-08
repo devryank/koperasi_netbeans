@@ -117,7 +117,7 @@ private Connection conn = new Koneksi().getConnection();
     }// </editor-fold>//GEN-END:initComponents
 
     private void loginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginActionPerformed
-        String id = null, name = null, email = null, password = null;
+        String id = null, name = null, role = null, email = null, password = null;
         
         String query = "SELECT * FROM employees WHERE email = ? AND password = ?";
         try {
@@ -128,11 +128,13 @@ private Connection conn = new Koneksi().getConnection();
             while(rs.next()) {
                 id = rs.getString("id");
                 name = rs.getString("name");
+                role = rs.getString("role");
             }
             rs.last();
             if(rs.getRow() == 1) {
                 Session.setId(id);
                 Session.setName(name);
+                Session.setRole(role);
                 MainMenu home = new MainMenu();
                 dispose();
                 home.setVisible(true);
