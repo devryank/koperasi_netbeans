@@ -7,6 +7,12 @@ package koperasi;
 import Attendance.Today;
 import Auth.Login;
 import Auth.Session;
+import Employees.ReadEmployees;
+import Entries.ReadEntries;
+import Exits.ReadExits;
+import Products.ReadProducts;
+import Transaction.Types.ReadTransactionTypes;
+import Transactions.Form;
 
 /**
  *
@@ -33,69 +39,103 @@ public class MainMenu extends javax.swing.JFrame {
 
         jMenuBar2 = new javax.swing.JMenuBar();
         jMenu3 = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
-        jMenuItem2 = new javax.swing.JMenuItem();
-        jMenuItem3 = new javax.swing.JMenuItem();
+        menuProducts = new javax.swing.JMenuItem();
+        menuEmployees = new javax.swing.JMenuItem();
+        menuTransactionTypes = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
-        jMenuItem4 = new javax.swing.JMenuItem();
-        jMenuItem5 = new javax.swing.JMenuItem();
-        jMenuItem6 = new javax.swing.JMenuItem();
-        jMenu5 = new javax.swing.JMenu();
-        jMenu6 = new javax.swing.JMenu();
+        menuTransactions = new javax.swing.JMenuItem();
+        menuEntries = new javax.swing.JMenuItem();
+        menuExits = new javax.swing.JMenuItem();
+        menuAttendances = new javax.swing.JMenu();
+        menuLogout = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jMenu3.setText("Master");
 
-        jMenuItem1.setText("Produk");
-        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem1ActionPerformed(evt);
+        menuProducts.setText("Produk");
+        menuProducts.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                menuProductsMouseClicked(evt);
             }
         });
-        jMenu3.add(jMenuItem1);
-
-        jMenuItem2.setText("Pegawai");
-        jMenu3.add(jMenuItem2);
-
-        jMenuItem3.setText("Tipe Transaksi");
-        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+        menuProducts.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem3ActionPerformed(evt);
+                menuProductsActionPerformed(evt);
             }
         });
-        jMenu3.add(jMenuItem3);
+        jMenu3.add(menuProducts);
+
+        menuEmployees.setText("Pegawai");
+        menuEmployees.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuEmployeesActionPerformed(evt);
+            }
+        });
+        jMenu3.add(menuEmployees);
+
+        menuTransactionTypes.setText("Tipe Transaksi");
+        menuTransactionTypes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuTransactionTypesActionPerformed(evt);
+            }
+        });
+        jMenu3.add(menuTransactionTypes);
 
         jMenuBar2.add(jMenu3);
 
         jMenu4.setText("Transaksi");
 
-        jMenuItem4.setText("Pembelian");
-        jMenu4.add(jMenuItem4);
+        menuTransactions.setText("Pembelian");
+        menuTransactions.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuTransactionsActionPerformed(evt);
+            }
+        });
+        jMenu4.add(menuTransactions);
 
-        jMenuItem5.setText("Barang Masuk");
-        jMenu4.add(jMenuItem5);
+        menuEntries.setText("Barang Masuk");
+        menuEntries.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuEntriesActionPerformed(evt);
+            }
+        });
+        jMenu4.add(menuEntries);
 
-        jMenuItem6.setText("Barang Keluar");
-        jMenu4.add(jMenuItem6);
+        menuExits.setText("Barang Keluar");
+        menuExits.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuExitsActionPerformed(evt);
+            }
+        });
+        jMenu4.add(menuExits);
 
         jMenuBar2.add(jMenu4);
 
-        jMenu5.setText("Absen");
-        jMenu5.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jMenu5MouseClicked(evt);
+        menuAttendances.setText("Absen");
+        menuAttendances.addMenuKeyListener(new javax.swing.event.MenuKeyListener() {
+            public void menuKeyPressed(javax.swing.event.MenuKeyEvent evt) {
+                menuAttendancesMenuKeyPressed(evt);
+            }
+            public void menuKeyReleased(javax.swing.event.MenuKeyEvent evt) {
+            }
+            public void menuKeyTyped(javax.swing.event.MenuKeyEvent evt) {
             }
         });
-        jMenuBar2.add(jMenu5);
+        menuAttendances.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                menuAttendancesMouseClicked(evt);
+            }
+        });
+        jMenuBar2.add(menuAttendances);
 
-        jMenu6.setText("Logout");
-        jMenu6.addMouseListener(new java.awt.event.MouseAdapter() {
+        menuLogout.setText("Logout");
+        menuLogout.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jMenu6MouseClicked(evt);
+                menuLogoutMouseClicked(evt);
             }
         });
-        jMenuBar2.add(jMenu6);
+        jMenuBar2.add(menuLogout);
 
         setJMenuBar(jMenuBar2);
 
@@ -113,27 +153,65 @@ public class MainMenu extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jMenuItem1ActionPerformed
+    private void menuProductsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuProductsActionPerformed
+        ReadProducts products = new ReadProducts();
+        products.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_menuProductsActionPerformed
 
-    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jMenuItem3ActionPerformed
+    private void menuTransactionTypesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuTransactionTypesActionPerformed
+        ReadTransactionTypes transactionTypes = new ReadTransactionTypes();
+        transactionTypes.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_menuTransactionTypesActionPerformed
 
-    private void jMenu5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu5MouseClicked
+    private void menuAttendancesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuAttendancesMouseClicked
         Today today = new Today();
         today.setVisible(true);
         dispose();
-    }//GEN-LAST:event_jMenu5MouseClicked
+    }//GEN-LAST:event_menuAttendancesMouseClicked
 
-    private void jMenu6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu6MouseClicked
+    private void menuLogoutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuLogoutMouseClicked
         Session.setId("");
         Session.setName("");
         Login login = new Login();
         dispose();
         login.setVisible(true);
-    }//GEN-LAST:event_jMenu6MouseClicked
+    }//GEN-LAST:event_menuLogoutMouseClicked
+
+    private void menuAttendancesMenuKeyPressed(javax.swing.event.MenuKeyEvent evt) {//GEN-FIRST:event_menuAttendancesMenuKeyPressed
+
+    }//GEN-LAST:event_menuAttendancesMenuKeyPressed
+
+    private void menuProductsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuProductsMouseClicked
+//        ReadProducts products = new ReadProducts();
+//        products.setVisible(true);
+//        dispose();
+    }//GEN-LAST:event_menuProductsMouseClicked
+
+    private void menuEmployeesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuEmployeesActionPerformed
+        ReadEmployees employees = new ReadEmployees();
+        employees.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_menuEmployeesActionPerformed
+
+    private void menuTransactionsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuTransactionsActionPerformed
+        Transactions.Form trxForm = new Form();
+        trxForm.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_menuTransactionsActionPerformed
+
+    private void menuEntriesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuEntriesActionPerformed
+        ReadEntries entries = new ReadEntries();
+        entries.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_menuEntriesActionPerformed
+
+    private void menuExitsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuExitsActionPerformed
+        ReadExits exits = new ReadExits();
+        exits.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_menuExitsActionPerformed
 
     /**
      * @param args the command line arguments
@@ -178,14 +256,14 @@ public class MainMenu extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu4;
-    private javax.swing.JMenu jMenu5;
-    private javax.swing.JMenu jMenu6;
     private javax.swing.JMenuBar jMenuBar2;
-    private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem2;
-    private javax.swing.JMenuItem jMenuItem3;
-    private javax.swing.JMenuItem jMenuItem4;
-    private javax.swing.JMenuItem jMenuItem5;
-    private javax.swing.JMenuItem jMenuItem6;
+    private javax.swing.JMenu menuAttendances;
+    private javax.swing.JMenuItem menuEmployees;
+    private javax.swing.JMenuItem menuEntries;
+    private javax.swing.JMenuItem menuExits;
+    private javax.swing.JMenu menuLogout;
+    private javax.swing.JMenuItem menuProducts;
+    private javax.swing.JMenuItem menuTransactionTypes;
+    private javax.swing.JMenuItem menuTransactions;
     // End of variables declaration//GEN-END:variables
 }
