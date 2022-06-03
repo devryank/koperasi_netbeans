@@ -82,7 +82,7 @@ private Path copy,files;
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jPanel2.setBackground(new java.awt.Color(0, 153, 153));
+        jPanel2.setBackground(new java.awt.Color(41, 128, 185));
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
@@ -95,6 +95,8 @@ private Path copy,files;
             }
         });
 
+        btnSave.setBackground(new java.awt.Color(41, 128, 185));
+        btnSave.setForeground(new java.awt.Color(255, 255, 255));
         btnSave.setText("Simpan");
         btnSave.setName("btnSave"); // NOI18N
         btnSave.addActionListener(new java.awt.event.ActionListener() {
@@ -107,8 +109,9 @@ private Path copy,files;
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Tambah Produk");
-        jLabel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 51, 51)));
 
+        btnCancel.setBackground(new java.awt.Color(41, 128, 185));
+        btnCancel.setForeground(new java.awt.Color(255, 255, 255));
         btnCancel.setText("Batal");
         btnCancel.setName("btnCancel"); // NOI18N
         btnCancel.addActionListener(new java.awt.event.ActionListener() {
@@ -150,7 +153,6 @@ private Path copy,files;
             }
         });
 
-        jLabel2.setText("jLabel2");
         jLabel2.setMaximumSize(new java.awt.Dimension(150, 150));
         jLabel2.setPreferredSize(new java.awt.Dimension(150, 150));
 
@@ -193,7 +195,9 @@ private Path copy,files;
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(40, 40, 40)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(18, 18, 18)
@@ -222,7 +226,7 @@ private Path copy,files;
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnSave)
                             .addComponent(btnCancel))))
-                .addContainerGap(97, Short.MAX_VALUE))
+                .addContainerGap(51, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());

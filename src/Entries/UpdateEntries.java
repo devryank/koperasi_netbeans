@@ -114,9 +114,12 @@ private SimpleDateFormat sdf;
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jPanel2.setBackground(new java.awt.Color(0, 153, 153));
+        jPanel2.setBackground(new java.awt.Color(223, 230, 233));
+        jPanel2.setForeground(new java.awt.Color(41, 128, 185));
         jPanel2.setPreferredSize(new java.awt.Dimension(688, 457));
 
+        btnSave.setBackground(new java.awt.Color(41, 128, 185));
+        btnSave.setForeground(new java.awt.Color(255, 255, 255));
         btnSave.setText("Simpan");
         btnSave.setName("btnSave"); // NOI18N
         btnSave.addActionListener(new java.awt.event.ActionListener() {
@@ -125,6 +128,8 @@ private SimpleDateFormat sdf;
             }
         });
 
+        btnBatal.setBackground(new java.awt.Color(41, 128, 185));
+        btnBatal.setForeground(new java.awt.Color(255, 255, 255));
         btnBatal.setText("Batal");
         btnBatal.setName("btnBatal"); // NOI18N
         btnBatal.addActionListener(new java.awt.event.ActionListener() {
@@ -134,11 +139,11 @@ private SimpleDateFormat sdf;
         });
 
         jLabel6.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel6.setForeground(new java.awt.Color(41, 128, 185));
         jLabel6.setText("Barang");
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel3.setForeground(new java.awt.Color(41, 128, 185));
         jLabel3.setText("Jumlah");
 
         amount.setName("amount"); // NOI18N
@@ -149,13 +154,12 @@ private SimpleDateFormat sdf;
         });
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setForeground(new java.awt.Color(41, 128, 185));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Ubah Barang Masuk");
-        jLabel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 51, 51)));
 
         jLabel11.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jLabel11.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel11.setForeground(new java.awt.Color(41, 128, 185));
         jLabel11.setText("Tanggal");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -210,7 +214,7 @@ private SimpleDateFormat sdf;
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnSave)
                     .addComponent(btnBatal))
-                .addContainerGap(102, Short.MAX_VALUE))
+                .addContainerGap(92, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());

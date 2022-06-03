@@ -74,10 +74,10 @@ private Path copy,files;
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jPanel2.setBackground(new java.awt.Color(0, 153, 153));
+        jPanel2.setBackground(new java.awt.Color(223, 230, 233));
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel3.setForeground(new java.awt.Color(41, 128, 185));
         jLabel3.setText("Nama");
 
         txtName.setName("txtName"); // NOI18N
@@ -88,9 +88,10 @@ private Path copy,files;
         });
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel4.setForeground(new java.awt.Color(41, 128, 185));
         jLabel4.setText("Jenis Kelamin");
 
+        btnSave.setBackground(new java.awt.Color(41, 128, 185));
         btnSave.setText("Simpan");
         btnSave.setName("btnSave"); // NOI18N
         btnSave.addActionListener(new java.awt.event.ActionListener() {
@@ -100,11 +101,11 @@ private Path copy,files;
         });
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setForeground(new java.awt.Color(41, 128, 185));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Tambah Pegawai");
-        jLabel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 51, 51)));
 
+        btnCancel.setBackground(new java.awt.Color(41, 128, 185));
         btnCancel.setText("Batal");
         btnCancel.setName("btnCancel"); // NOI18N
         btnCancel.addActionListener(new java.awt.event.ActionListener() {
@@ -121,7 +122,7 @@ private Path copy,files;
         });
 
         jLabel6.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel6.setForeground(new java.awt.Color(41, 128, 185));
         jLabel6.setText("E-mail");
 
         txtPhone.setName("txtnm"); // NOI18N
@@ -132,11 +133,11 @@ private Path copy,files;
         });
 
         jLabel8.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jLabel8.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel8.setForeground(new java.awt.Color(41, 128, 185));
         jLabel8.setText("No.HP");
 
         jLabel9.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jLabel9.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel9.setForeground(new java.awt.Color(41, 128, 185));
         jLabel9.setText("Alamat");
 
         buttonGroup1.add(radioMale);
@@ -150,7 +151,7 @@ private Path copy,files;
         jScrollPane1.setViewportView(txtAddress);
 
         jLabel10.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jLabel10.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel10.setForeground(new java.awt.Color(41, 128, 185));
         jLabel10.setText("Password");
 
         txtPassword.setName("txtnm"); // NOI18N
@@ -160,6 +161,7 @@ private Path copy,files;
             }
         });
 
+        jLabel5.setForeground(new java.awt.Color(41, 128, 185));
         jLabel5.setText("Jabatan");
 
         listRole.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "admin", "employee" }));
