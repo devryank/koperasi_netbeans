@@ -9,8 +9,8 @@ import Auth.Login;
 import Auth.Session;
 import Employees.ReadEmployees;
 import Entries.ReadEntries;
-import Exits.ReadExits;
 import Products.ReadProducts;
+import Suppliers.ReadSuppliers;
 import Transaction.Types.ReadTransactionTypes;
 import Transactions.Form;
 import javax.swing.JOptionPane;
@@ -53,10 +53,10 @@ public class MainMenu extends javax.swing.JFrame {
         menuProducts = new javax.swing.JMenuItem();
         menuEmployees = new javax.swing.JMenuItem();
         menuTransactionTypes = new javax.swing.JMenuItem();
+        menuSuppliers = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
         menuTransactions = new javax.swing.JMenuItem();
         menuEntries = new javax.swing.JMenuItem();
-        menuExits = new javax.swing.JMenuItem();
         menuAttendances = new javax.swing.JMenu();
         menuLogout = new javax.swing.JMenu();
 
@@ -124,6 +124,14 @@ public class MainMenu extends javax.swing.JFrame {
         });
         jMenu3.add(menuTransactionTypes);
 
+        menuSuppliers.setText("Supplier");
+        menuSuppliers.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuSuppliersActionPerformed(evt);
+            }
+        });
+        jMenu3.add(menuSuppliers);
+
         jMenuBar2.add(jMenu3);
 
         jMenu4.setText("Transaksi");
@@ -143,14 +151,6 @@ public class MainMenu extends javax.swing.JFrame {
             }
         });
         jMenu4.add(menuEntries);
-
-        menuExits.setText("Barang Keluar");
-        menuExits.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menuExitsActionPerformed(evt);
-            }
-        });
-        jMenu4.add(menuExits);
 
         jMenuBar2.add(jMenu4);
 
@@ -250,11 +250,15 @@ public class MainMenu extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_menuEntriesActionPerformed
 
-    private void menuExitsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuExitsActionPerformed
-        ReadExits exits = new ReadExits();
-        exits.setVisible(true);
-        dispose();
-    }//GEN-LAST:event_menuExitsActionPerformed
+    private void menuSuppliersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuSuppliersActionPerformed
+        if(Session.getRole().equals("admin")) {
+            ReadSuppliers suppliers = new ReadSuppliers();
+            suppliers.setVisible(true);
+            dispose();
+        } else {
+            JOptionPane.showMessageDialog(null, "Akses tidak diizinkan");
+        }
+    }//GEN-LAST:event_menuSuppliersActionPerformed
 
     /**
      * @param args the command line arguments
@@ -306,9 +310,9 @@ public class MainMenu extends javax.swing.JFrame {
     private javax.swing.JMenu menuAttendances;
     private javax.swing.JMenuItem menuEmployees;
     private javax.swing.JMenuItem menuEntries;
-    private javax.swing.JMenuItem menuExits;
     private javax.swing.JMenu menuLogout;
     private javax.swing.JMenuItem menuProducts;
+    private javax.swing.JMenuItem menuSuppliers;
     private javax.swing.JMenuItem menuTransactionTypes;
     private javax.swing.JMenuItem menuTransactions;
     // End of variables declaration//GEN-END:variables
