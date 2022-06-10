@@ -4,20 +4,28 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/C:/Users/ryans/Documents/NetBeansProjects/koperasi_netbeans/src/Employees/CreateEmployees.java</file>
+            <file>file:/C:/Users/ryans/Documents/NetBeansProjects/koperasi_netbeans/src/Products/UpdateProducts.java</file>
+            <file>file:/C:/Users/ryans/Documents/NetBeansProjects/koperasi_netbeans/src/Products/CreateProducts.java</file>
             <file>file:/C:/Users/ryans/Documents/NetBeansProjects/koperasi_netbeans/src/Entries/CreateEntries.java</file>
             <file>file:/C:/Users/ryans/Documents/NetBeansProjects/koperasi_netbeans/src/Attendance/Today.java</file>
-            <file>file:/C:/Users/ryans/Documents/NetBeansProjects/koperasi_netbeans/src/Exits/CreateExits.java</file>
             <file>file:/C:/Users/ryans/Documents/NetBeansProjects/koperasi_netbeans/src/Koneksi/Koneksi.java</file>
+            <file>file:/C:/Users/ryans/Documents/NetBeansProjects/koperasi_netbeans/src/Transactions/Form.java</file>
             <file>file:/C:/Users/ryans/Documents/NetBeansProjects/koperasi_netbeans/src/Auth/Session.java</file>
             <file>file:/C:/Users/ryans/Documents/NetBeansProjects/koperasi_netbeans/src/koperasi/Koperasi.java</file>
             <file>file:/C:/Users/ryans/Documents/NetBeansProjects/koperasi_netbeans/src/Auth/Login.java</file>
-            <file>file:/C:/Users/ryans/Documents/NetBeansProjects/koperasi_netbeans/src/Exits/UpdateExits.java</file>
+            <file>file:/C:/Users/ryans/Documents/NetBeansProjects/koperasi_netbeans/src/Transactions/Add.java</file>
             <file>file:/C:/Users/ryans/Documents/NetBeansProjects/koperasi_netbeans/src/Employees/UpdateEmployees.java</file>
-            <file>file:/C:/Users/ryans/Documents/NetBeansProjects/koperasi_netbeans/src/Exits/ReadExits.java</file>
+            <file>file:/C:/Users/ryans/Documents/NetBeansProjects/koperasi_netbeans/src/Suppliers/ReadSuppliers.java</file>
+            <file>file:/C:/Users/ryans/Documents/NetBeansProjects/koperasi_netbeans/src/Products/ReadProducts.java</file>
             <file>file:/C:/Users/ryans/Documents/NetBeansProjects/koperasi_netbeans/src/koperasi/MainMenu.java</file>
             <file>file:/C:/Users/ryans/Documents/NetBeansProjects/koperasi_netbeans/src/Employees/ReadEmployees.java</file>
+            <file>file:/C:/Users/ryans/Documents/NetBeansProjects/koperasi_netbeans/src/Transaction/Types/UpdateTransactionTypes.java</file>
+            <file>file:/C:/Users/ryans/Documents/NetBeansProjects/koperasi_netbeans/src/Suppliers/CreateSuppliers.java</file>
             <file>file:/C:/Users/ryans/Documents/NetBeansProjects/koperasi_netbeans/src/Entries/ReadEntries.java</file>
+            <file>file:/C:/Users/ryans/Documents/NetBeansProjects/koperasi_netbeans/src/Transaction/Types/CreateTransactionTypes.java</file>
+            <file>file:/C:/Users/ryans/Documents/NetBeansProjects/koperasi_netbeans/src/Suppliers/UpdateSuppliers.java</file>
             <file>file:/C:/Users/ryans/Documents/NetBeansProjects/koperasi_netbeans/src/Entries/UpdateEntries.java</file>
+            <file>file:/C:/Users/ryans/Documents/NetBeansProjects/koperasi_netbeans/src/Transaction/Types/ReadTransactionTypes.java</file>
         </group>
     </open-files>
 </project-private>

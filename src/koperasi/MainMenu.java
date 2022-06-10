@@ -11,7 +11,7 @@ import Employees.ReadEmployees;
 import Entries.ReadEntries;
 import Products.ReadProducts;
 import Suppliers.ReadSuppliers;
-import Transaction.Types.ReadTransactionTypes;
+import Categories.ReadCategories;
 import Transactions.Form;
 import javax.swing.JOptionPane;
 
@@ -196,7 +196,7 @@ public class MainMenu extends javax.swing.JFrame {
 
     private void menuTransactionTypesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuTransactionTypesActionPerformed
         if(Session.getRole().equals("admin")) {
-            ReadTransactionTypes transactionTypes = new ReadTransactionTypes();
+            ReadCategories transactionTypes = new ReadCategories();
             transactionTypes.setVisible(true);
             dispose();
         } else {

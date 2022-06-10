@@ -46,7 +46,7 @@ private String id = "";
 //      get list type
         try {
             listTypes.removeAllItems();
-            String sql = "SELECT name FROM transaction_types";
+            String sql = "SELECT name FROM categories";
             Statement stat = conn.createStatement();
             ResultSet rs = stat.executeQuery(sql);
             while(rs.next()) {
@@ -263,7 +263,7 @@ private String id = "";
         
         String sql = "update products set name=?, type_id=?, image=?, price=? where product_code = '"+this.id+"'";
         try {
-            String sqlSearchId = "SELECT id FROM transaction_types where name like '%"+listTypes.getSelectedItem()+"%'";
+            String sqlSearchId = "SELECT id FROM categories where name like '%"+listTypes.getSelectedItem()+"%'";
             Statement statId = conn.createStatement();
             ResultSet rs = statId.executeQuery(sqlSearchId);
             int typeId = 0;

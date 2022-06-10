@@ -39,7 +39,7 @@ private Path copy,files;
         setLocationRelativeTo(this);
         try {
             listTypes.removeAllItems();
-            String sql = "SELECT name FROM transaction_types";
+            String sql = "SELECT name FROM categories";
             Statement stat = conn.createStatement();
             ResultSet rs = stat.executeQuery(sql);
             while(rs.next()) {
@@ -249,7 +249,7 @@ private Path copy,files;
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
         try {
-            String sqlSearchId = "SELECT id FROM transaction_types where name like '%"+listTypes.getSelectedItem()+"%'";
+            String sqlSearchId = "SELECT id FROM categories where name like '%"+listTypes.getSelectedItem()+"%'";
             Statement statId = conn.createStatement();
             ResultSet rs = statId.executeQuery(sqlSearchId);
             int typeId = 0;

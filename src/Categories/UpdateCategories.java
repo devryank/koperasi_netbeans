@@ -3,51 +3,30 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Transaction.Types;
+package Categories;
 
-import Exits.*;
-import Employees.*;
 import Koneksi.Koneksi;
-import java.awt.Image;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.CopyOption;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
 import java.sql.*;
-import java.text.SimpleDateFormat;
-import java.util.UUID;
-import javax.imageio.ImageIO;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.ImageIcon;
-import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
 /**
  *
  * @author Lenovo
  */
-public class UpdateTransactionTypes extends javax.swing.JFrame {
+public class UpdateCategories extends javax.swing.JFrame {
 private Connection conn = new Koneksi().getConnection();
-private String gambar;
-private boolean isChange = false;
-private Path copy,files;
 private int id = 0;
-private SimpleDateFormat sdf;
     /**
      * Creates new form Update
      */
-    public UpdateTransactionTypes(int id) {
+    public UpdateCategories(int id) {
         setUndecorated(true);
         initComponents();
         setLocationRelativeTo(this);
         this.id = id;
         
         try {
-            String getEntryById = "SELECT * FROM transaction_types where id like '%"+id+"%'";
+            String getEntryById = "SELECT * FROM categories where id like '%"+id+"%'";
             Statement stat = conn.createStatement();
             ResultSet rsGetEntryById = stat.executeQuery(getEntryById);
             if(rsGetEntryById.next()) {
@@ -113,7 +92,7 @@ private SimpleDateFormat sdf;
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Ubah Tipe Transaksi");
+        jLabel1.setText("Ubah Kategori");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -170,7 +149,7 @@ private SimpleDateFormat sdf;
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
         try {
-            String sql = "update transaction_types set name=? where id="+this.id+"";
+            String sql = "update categories set name=? where id="+this.id+"";
             PreparedStatement stat = conn.prepareStatement(sql);
             stat.setString(1, name.getText());
             
@@ -180,16 +159,16 @@ private SimpleDateFormat sdf;
         catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "data gagal diubah "+e);
         }
-        ReadTransactionTypes ReadTransactionTypes = new ReadTransactionTypes();
+        ReadCategories ReadTransactionTypes = new ReadCategories();
         ReadTransactionTypes.setVisible(true);
         ReadTransactionTypes.datatable();
         dispose();
     }//GEN-LAST:event_btnSaveActionPerformed
 
     private void btnBatalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBatalActionPerformed
-        ReadTransactionTypes readRoles = new ReadTransactionTypes();
-        readRoles.setVisible(true);
-        readRoles.datatable();
+        ReadCategories ReadCategories = new ReadCategories();
+        ReadCategories.setVisible(true);
+        ReadCategories.datatable();
         dispose();
     }//GEN-LAST:event_btnBatalActionPerformed
 
@@ -214,19 +193,19 @@ private SimpleDateFormat sdf;
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(UpdateTransactionTypes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(UpdateCategories.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(UpdateTransactionTypes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(UpdateCategories.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(UpdateTransactionTypes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(UpdateCategories.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(UpdateTransactionTypes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(UpdateCategories.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new UpdateTransactionTypes(0).setVisible(true);
+                new UpdateCategories(0).setVisible(true);
             }
         });
     }
