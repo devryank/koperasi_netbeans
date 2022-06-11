@@ -43,7 +43,7 @@ private int typeId, total, price = 0;
         String cariitem = txtcari.getText();
         
         try {
-            String sql = "SELECT p.*, tt.name as type_name from products p INNER JOIN transaction_types tt ON p.type_id = tt.id where p.product_code like '%"+cariitem+"%' or p.name like '%"+cariitem+"%' order by p.product_code asc";
+            String sql = "SELECT p.*, tt.name as type_name from products p INNER JOIN categories tt ON p.type_id = tt.id where p.product_code like '%"+cariitem+"%' or p.name like '%"+cariitem+"%' order by p.product_code asc";
             Statement stat = conn.createStatement();
             ResultSet hasil = stat.executeQuery(sql);
             while(hasil.next()) {
