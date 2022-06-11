@@ -36,6 +36,7 @@ private int id = 0;
         Object[] Baris = {
             "id", 
             "Nama",
+            "No HP",
             "Alamat",
         };
         tabmode = new DefaultTableModel(null, Baris);
@@ -49,6 +50,7 @@ private int id = 0;
                 tabmode.addRow(new Object[] {
                     hasil.getString("id"),
                     hasil.getString("name"),
+                    hasil.getString("phone"),
                     hasil.getString("address"),
                 });
             }
