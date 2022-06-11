@@ -35,6 +35,8 @@ private int id = 0;
         Object[] Baris = {
             "id", 
             "Kode Barang",
+            "Barang",
+            "Supplier",
             "Jumlah",
             "Tanggal",
         };
@@ -42,13 +44,15 @@ private int id = 0;
         String cariitem = txtcari.getText();
         
         try {
-            String sql = "SELECT * from entries where id like '%"+cariitem+"%' or product_code like '%"+cariitem+"%' order by id asc";
+            String sql = "SELECT e.*, s.name as supplier_name, p.product_code,p.name as product_name from entries e INNER JOIN products p ON p.product_code = e.product_code INNER JOIN suppliers s ON s.id = e.supplier_id where e.id like '%"+cariitem+"%' or e.product_code like '%"+cariitem+"%' order by e.id asc";
             Statement stat = conn.createStatement();
             ResultSet hasil = stat.executeQuery(sql);
             while(hasil.next()) {
                 tabmode.addRow(new Object[] {
                     hasil.getString("id"),
                     hasil.getString("product_code"),
+                    hasil.getString("product_name"),
+                    hasil.getString("supplier_name"),
                     hasil.getString("amount"),
                     hasil.getString("created_at"),
                 });

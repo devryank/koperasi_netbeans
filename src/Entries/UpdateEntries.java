@@ -5,24 +5,12 @@
  */
 package Entries;
 
-import Employees.*;
 import Koneksi.Koneksi;
 import java.awt.Image;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.CopyOption;
-import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
 import java.sql.*;
 import java.text.SimpleDateFormat;
-import java.util.UUID;
-import javax.imageio.ImageIO;
 import javax.swing.DefaultComboBoxModel;
-import javax.swing.ImageIcon;
-import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
 /**
@@ -31,9 +19,6 @@ import javax.swing.JOptionPane;
  */
 public class UpdateEntries extends javax.swing.JFrame {
 private Connection conn = new Koneksi().getConnection();
-private String gambar;
-private boolean isChange = false;
-private Path copy,files;
 private int id = 0;
 private SimpleDateFormat sdf;
     /**
@@ -61,6 +46,22 @@ private SimpleDateFormat sdf;
         } catch(Exception e) {
             JOptionPane.showMessageDialog(null, "data gagal dipanggil"+e);
         } 
+        
+        try {
+            listSuppliers.removeAllItems();
+            String sql = "SELECT name FROM suppliers";
+            Statement stat = conn.createStatement();
+            ResultSet rs = stat.executeQuery(sql);
+            while(rs.next()) {
+                String supplier = rs.getString("name");
+                DefaultComboBoxModel model = (DefaultComboBoxModel)listSuppliers.getModel();
+                if(model.getIndexOf(supplier) == -1) {
+                    listSuppliers.addItem(supplier);
+                }
+            }
+        } catch(Exception e) {
+            JOptionPane.showMessageDialog(null, "data gagal dipanggil"+e);
+        }    
 //            Get specific entry
         try {
             String getEntryById = "SELECT * FROM entries where id like '%"+id+"%'";
@@ -69,8 +70,9 @@ private SimpleDateFormat sdf;
             if(rsGetEntryById.next()) {
           System.out.println("OK");
                 String product = "";
+                String supplier = "";
                 try {
-                    String searchName = "SELECT name FROM products where product_code like '%"+rsGetEntryById.getString(2)+"%'";
+                    String searchName = "SELECT name FROM products where product_code like '%"+rsGetEntryById.getString("product_code")+"%'";
                     Statement statementSearchName = conn.createStatement();
                     ResultSet rsSearchName = statementSearchName.executeQuery(searchName);
                     if(rsSearchName.next()) {
@@ -79,8 +81,18 @@ private SimpleDateFormat sdf;
                 } catch(Exception e) {
                     JOptionPane.showMessageDialog(null, "data gagal dipanggil"+e);
                 }   
+                try {
+                    String searchName = "SELECT name FROM suppliers where id like '%"+rsGetEntryById.getString("supplier_id")+"%'";
+                    Statement statementSearchName = conn.createStatement();
+                    ResultSet rsSearchName = statementSearchName.executeQuery(searchName);
+                    if(rsSearchName.next()) {
+                        supplier = rsSearchName.getString("name");
+                    }
+                } catch(Exception e) {
+                    JOptionPane.showMessageDialog(null, "data gagal dipanggil"+e);
+                }   
                 listProducts.setSelectedItem(product);
-                System.out.println(rsGetEntryById.getString("amount"));
+                listSuppliers.setSelectedItem(supplier);
                 amount.setText(rsGetEntryById.getString("amount"));
                 
                 sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -111,10 +123,12 @@ private SimpleDateFormat sdf;
         jLabel11 = new javax.swing.JLabel();
         created_at = new com.toedter.calendar.JDateChooser();
         listProducts = new javax.swing.JComboBox<>();
+        jLabel7 = new javax.swing.JLabel();
+        listSuppliers = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jPanel2.setBackground(new java.awt.Color(223, 230, 233));
+        jPanel2.setBackground(new java.awt.Color(41, 128, 185));
         jPanel2.setForeground(new java.awt.Color(41, 128, 185));
         jPanel2.setPreferredSize(new java.awt.Dimension(688, 457));
 
@@ -139,11 +153,11 @@ private SimpleDateFormat sdf;
         });
 
         jLabel6.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jLabel6.setForeground(new java.awt.Color(41, 128, 185));
+        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
         jLabel6.setText("Barang");
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(41, 128, 185));
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("Jumlah");
 
         amount.setName("amount"); // NOI18N
@@ -154,13 +168,17 @@ private SimpleDateFormat sdf;
         });
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(41, 128, 185));
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Ubah Barang Masuk");
 
         jLabel11.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jLabel11.setForeground(new java.awt.Color(41, 128, 185));
+        jLabel11.setForeground(new java.awt.Color(255, 255, 255));
         jLabel11.setText("Tanggal");
+
+        jLabel7.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel7.setText("Supplier");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -172,49 +190,55 @@ private SimpleDateFormat sdf;
                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 657, Short.MAX_VALUE)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(37, 37, 37)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel6)
+                                    .addComponent(jLabel3)
+                                    .addComponent(jLabel7))
+                                .addGap(61, 61, 61)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(listSuppliers, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(listProducts, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(amount, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(btnSave)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(btnBatal))
-                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
-                                    .addComponent(jLabel11)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(created_at, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
-                                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jLabel6)
-                                        .addComponent(jLabel3))
-                                    .addGap(67, 67, 67)
-                                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(listProducts, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(amount, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addComponent(jLabel11)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addComponent(btnSave)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(btnBatal))
+                                    .addComponent(created_at, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addGap(5, 5, 5)))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(listProducts, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel6))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel7)
+                    .addComponent(listSuppliers, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(listProducts, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel6))
-                        .addGap(18, 18, 18)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(amount, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel3))
                         .addGap(18, 18, 18)
                         .addComponent(created_at, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jLabel11))
-                .addGap(38, 38, 38)
+                .addGap(36, 36, 36)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnSave)
                     .addComponent(btnBatal))
-                .addContainerGap(92, Short.MAX_VALUE))
+                .addContainerGap(50, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -237,20 +261,28 @@ private SimpleDateFormat sdf;
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
         try {
-            String sqlSearchId = "SELECT product_code FROM products where name like '%"+listProducts.getSelectedItem()+"%'";
-            Statement statId = conn.createStatement();
-            ResultSet rs = statId.executeQuery(sqlSearchId);
-            String productCodeId = "";
-            if(rs.next()) {
-               productCodeId = rs.getString(1);
+            String sqlSearchIdProduct = "SELECT product_code FROM products where name like '%"+listProducts.getSelectedItem()+"%'";
+            Statement statIdProduct = conn.createStatement();
+            ResultSet rsProduct = statIdProduct.executeQuery(sqlSearchIdProduct);
+            String productCode = "";
+            if(rsProduct.next()) {
+               productCode = rsProduct.getString(1);
+            }
+            String sqlSearchIdSupplier = "SELECT id FROM suppliers where name like '%"+listSuppliers.getSelectedItem()+"%'";
+            Statement statIdSupplier = conn.createStatement();
+            ResultSet rsSupplier = statIdSupplier.executeQuery(sqlSearchIdSupplier);
+            int supplierCode = 0;
+            if(rsSupplier.next()) {
+               supplierCode = rsSupplier.getInt(1);
             }
             
-            String sql = "update entries set product_code=?, amount=?, created_at=STR_TO_DATE(?, '%Y-%m-%d') where id="+this.id+"";
+            String sql = "update entries set supplier_id=?, product_code=?, amount=?, created_at=STR_TO_DATE(?, '%Y-%m-%d') where id="+this.id+"";
             PreparedStatement stat = conn.prepareStatement(sql);
-            stat.setString(1, productCodeId);
-            stat.setString(2, amount.getText());
+            stat.setInt(1, supplierCode);
+            stat.setString(2, productCode);
+            stat.setString(3, amount.getText());
             sdf = new SimpleDateFormat("yyyy-MM-dd");
-            stat.setString(3, sdf.format(created_at.getDate()));
+            stat.setString(4, sdf.format(created_at.getDate()));
             
             stat.executeUpdate();
             JOptionPane.showMessageDialog(null, "data berhasil diubah");    
@@ -318,7 +350,9 @@ private SimpleDateFormat sdf;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JComboBox<String> listProducts;
+    private javax.swing.JComboBox<String> listSuppliers;
     // End of variables declaration//GEN-END:variables
 }
