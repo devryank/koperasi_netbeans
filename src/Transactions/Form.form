@@ -125,7 +125,7 @@
     </Component>
     <Component class="javax.swing.JLabel" name="totalHarga">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Harga"/>
+        <Property name="text" type="java.lang.String" value="Rp.0"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JButton" name="btnConfirm">

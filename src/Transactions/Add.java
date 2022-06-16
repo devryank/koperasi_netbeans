@@ -37,20 +37,22 @@ private int typeId, total, price = 0;
             "Kode", 
             "Nama",
             "Jenis",
+            "Stok",
             "Harga",
         };
         tabmode = new DefaultTableModel(null, Baris);
         String cariitem = txtcari.getText();
         
         try {
-            String sql = "SELECT p.*, tt.name as type_name from products p INNER JOIN categories tt ON p.type_id = tt.id where p.product_code like '%"+cariitem+"%' or p.name like '%"+cariitem+"%' order by p.product_code asc";
+            String sql = "SELECT p.*, c.name as category_name, (SELECT case ((SELECT SUM(amount) FROM entries e where e.product_code = p.product_code) - (SELECT SUM(amount) from transactions t where t.product_code = p.product_code)) when 0 then \"stok habis\" ELSE ((SELECT SUM(amount) FROM entries e where e.product_code = p.product_code) - (SELECT SUM(amount) from transactions t where t.product_code = p.product_code)) end) as stock from products p INNER JOIN categories c ON p.category_id = c.id INNER JOIN entries e ON e.product_code = p.product_code INNER JOIN transactions t ON t.product_code = p.product_code where p.product_code like '%"+cariitem+"%' or p.name like '%"+cariitem+"%' group by p.product_code order by p.product_code asc;";
             Statement stat = conn.createStatement();
             ResultSet hasil = stat.executeQuery(sql);
             while(hasil.next()) {
                 tabmode.addRow(new Object[] {
                     hasil.getString("product_code"),
                     hasil.getString("name"),
-                    hasil.getString("type_name"),
+                    hasil.getString("category_name"),
+                    hasil.getString("stock"),
                     hasil.getString("price"),
                 });
             }
@@ -213,14 +215,13 @@ private int typeId, total, price = 0;
                 } else {
                     invNow = "INV-" + dtf.format(now) + "001";
                 }
-                String sql = "insert into transactions values(0,?,?,?,?,?,?,NOW())";
+                String sql = "insert into transactions values(0,?,?,?,?,?,NOW())";
                 PreparedStatement stat = conn.prepareStatement(sql);
                 stat.setString(1, invNow);
-                stat.setInt(2, typeId);
-                stat.setString(3, product_code);
-                stat.setString(4, amount.getText());
-                stat.setInt(5, Integer.parseInt(amount.getText()) * price);
-                stat.setString(6, "0");
+                stat.setString(2, product_code);
+                stat.setString(3, amount.getText());
+                stat.setInt(4, Integer.parseInt(amount.getText()) * price);
+                stat.setString(5, "0");
 
                 stat.executeUpdate();
                 JOptionPane.showMessageDialog(null, "data berhasil disimpan");
@@ -244,12 +245,12 @@ private int typeId, total, price = 0;
         try {
             product_code = (String) tblProducts.getModel().getValueAt(row, col);
 
-            String sqlSearchId = "SELECT product_code, name, type_id, price FROM products where product_code = '"+product_code+"'";
+            String sqlSearchId = "SELECT product_code, name, category_id, price FROM products where product_code = '"+product_code+"'";
             Statement statId = conn.createStatement();
             ResultSet rs = statId.executeQuery(sqlSearchId);
             if(rs.next()) {
                 productName.setText(rs.getString("name"));
-                typeId = rs.getInt("type_id");
+                typeId = rs.getInt("category_id");
                 price = rs.getInt("price");
             } else {
                 productName.setText("Error");

@@ -35,19 +35,20 @@ private String inv_id = "";
         String sql = "SELECT SUM(total) as totalHarga from transactions where is_done = '0'";
             Statement stat = conn.createStatement();
             ResultSet hasil = stat.executeQuery(sql);
-            
             while(hasil.next()) {
-                Double total = Double.parseDouble(hasil.getString("totalHarga"));
-                
-                DecimalFormat kursIndonesia = (DecimalFormat) DecimalFormat.getCurrencyInstance();
-                DecimalFormatSymbols formatRp = new DecimalFormatSymbols();
+                if(hasil.getString("totalHarga") != null) {
+                    Double total = Double.parseDouble(hasil.getString("totalHarga"));
 
-                formatRp.setCurrencySymbol("Rp.");
-                formatRp.setGroupingSeparator('.');
-                formatRp.setMonetaryDecimalSeparator(',');
+                    DecimalFormat kursIndonesia = (DecimalFormat) DecimalFormat.getCurrencyInstance();
+                    DecimalFormatSymbols formatRp = new DecimalFormatSymbols();
 
-                kursIndonesia.setDecimalFormatSymbols(formatRp);
-                totalHarga.setText(kursIndonesia.format(total));
+                    formatRp.setCurrencySymbol("Rp.");
+                    formatRp.setGroupingSeparator('.');
+                    formatRp.setMonetaryDecimalSeparator(',');
+
+                    kursIndonesia.setDecimalFormatSymbols(formatRp);
+                    totalHarga.setText(kursIndonesia.format(total));
+                }
             }            
         } catch(Exception e) {
             JOptionPane.showMessageDialog(null, "data gagal dipanggil"+e);
@@ -66,16 +67,12 @@ private String inv_id = "";
         String cariitem = txtcari.getText();
         
         try {
-            String sql = "SELECT t.*, tt.name as type_name, p.name as product_name from transactions t INNER JOIN "
-                    + "transaction_types tt ON t.type_id = tt.id INNER JOIN products p ON t.product_code = p.product_code "
-                    + "where (t.inv_id like '%"+cariitem+"%' or p.name like '%"+cariitem+"%') AND t.is_done = '0' "
-                    + "order by t.created_at asc";
+            String sql = "SELECT t.*, tt.name as type_name, p.name as product_name from transactions t INNER JOIN products p ON t.product_code = p.product_code INNER JOIN categories tt ON p.category_id = tt.id where (t.inv_id like '%"+cariitem+"%' or p.name like '%"+cariitem+"%') AND t.is_done = '0' order by t.created_at asc;";
             Statement stat = conn.createStatement();
             ResultSet hasil = stat.executeQuery(sql);
             while(hasil.next()) {
                 inv_id = hasil.getString("inv_id");
                 tabmode.addRow(new Object[] {
-                    hasil.getString("type_name"),
                     hasil.getString("product_name"),
                     hasil.getString("amount"),
                     hasil.getString("total"),
@@ -143,7 +140,7 @@ private String inv_id = "";
 
         jLabel1.setText("Total");
 
-        totalHarga.setText("Harga");
+        totalHarga.setText("Rp.0");
 
         btnConfirm.setText("Konfirmasi Pembayaran");
         btnConfirm.addActionListener(new java.awt.event.ActionListener() {
@@ -228,7 +225,8 @@ private String inv_id = "";
             stat.setString(1, "1");
             
             stat.executeUpdate();
-            JOptionPane.showMessageDialog(null, "Transaksi telah berhasil!");    
+            JOptionPane.showMessageDialog(null, "Transaksi telah berhasil!");
+            totalHarga.setText("Rp.0");
         }
         catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Transaksi gagal! "+e);
