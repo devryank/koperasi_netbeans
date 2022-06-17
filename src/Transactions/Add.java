@@ -70,6 +70,7 @@ private int typeId, total, price = 0;
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblProducts = new javax.swing.JTable();
         txtcari = new javax.swing.JTextField();
@@ -79,6 +80,8 @@ private int typeId, total, price = 0;
         productName = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jPanel1.setBackground(new java.awt.Color(223, 230, 233));
 
         tblProducts.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -100,6 +103,8 @@ private int typeId, total, price = 0;
 
         txtcari.setName("txtcari"); // NOI18N
 
+        bcari.setBackground(new java.awt.Color(41, 128, 185));
+        bcari.setForeground(new java.awt.Color(255, 255, 255));
         bcari.setText("Cari");
         bcari.setName("bcari"); // NOI18N
         bcari.addActionListener(new java.awt.event.ActionListener() {
@@ -108,6 +113,8 @@ private int typeId, total, price = 0;
             }
         });
 
+        addToCart.setBackground(new java.awt.Color(41, 128, 185));
+        addToCart.setForeground(new java.awt.Color(255, 255, 255));
         addToCart.setText("Tambah ke Keranjang");
         addToCart.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -124,44 +131,61 @@ private int typeId, total, price = 0;
 
         productName.setText("Nama Produk");
 
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 603, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 583, Short.MAX_VALUE)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                            .addGap(0, 0, Short.MAX_VALUE)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                    .addComponent(txtcari, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(bcari))
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                    .addComponent(productName)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(amount, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(addToCart)))))
+                    .addContainerGap()))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 366, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(txtcari, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(bcari))
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 239, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 53, Short.MAX_VALUE)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(addToCart, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(amount, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(productName))
+                    .addContainerGap()))
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 583, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(txtcari, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(bcari))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(productName)
-                                .addGap(18, 18, 18)
-                                .addComponent(amount, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(addToCart)))))
-                .addContainerGap())
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(32, 32, 32)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtcari, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(bcari))
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 241, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(addToCart)
-                    .addComponent(amount, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(productName))
-                .addGap(18, 18, 18))
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -173,66 +197,100 @@ private int typeId, total, price = 0;
 
     private void addToCartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addToCartActionPerformed
         if(product_code != "" && amount.getText() != "" && productName.getText() != "Error") {
-//            get last invoice id
-            try {
-                String sqlLastInvoiceId = "SELECT inv_id, is_done FROM transactions order by created_at desc limit 1";
-                Statement statLastInvoiceId = conn.createStatement();
-                ResultSet rs = statLastInvoiceId.executeQuery(sqlLastInvoiceId);
-                String lastInvoice = "";
-                String is_done = "";
-                if(rs.next()) {
-                  lastInvoice = rs.getString("inv_id");
-                  lastInvoice = lastInvoice.substring(lastInvoice.lastIndexOf("-") + 1);
-                  is_done = rs.getString("is_done");
-                }
-
-                int orderToday = 0;
-                String orderNow = "";
-                String invNow = "";
-                DateTimeFormatter dtf = DateTimeFormatter.ofPattern("ddMMyyyy");
-                LocalDateTime now = LocalDateTime.now();
-                
-                if(lastInvoice != "") {
-                    String dateLastOrder = lastInvoice.substring(0, 8);
-//                    jika tanggal transaksi terakhir sama dengan transaksi hari ini
-                    if(dateLastOrder.equals(dtf.format(now))) {                        
-//                      jika transaksi terakhir sudah selesai maka buat invoice + 1
-                        if(is_done.equals("1")) {
-                        orderToday = Integer.valueOf(lastInvoice.substring(lastInvoice.length() - 3));
-                        orderNow = String.format("%03d", orderToday+1);
-                        invNow = "INV-" + dateLastOrder + orderNow;
-
-                        } else {
-    //                      jika transaksi terakhir belum selesai
-                            orderToday = Integer.valueOf(lastInvoice.substring(lastInvoice.length() - 3));
-                            orderNow = String.format("%03d", orderToday);
-                            invNow = "INV-" + dateLastOrder + orderNow;
+            int amountTrx = 0;
+            int amountEntries = 0;
+               try {
+                    String sqlAmountTrx = "SELECT SUM(amount) as amount FROM transactions where product_code = '" + product_code + "';";
+                    Statement statAmountTrx = conn.createStatement();
+                    ResultSet rs = statAmountTrx.executeQuery(sqlAmountTrx);
+                    if(rs.next()) {
+                      amountTrx = rs.getInt("amount");
+                      System.out.println(amountTrx);
+                    }
+               } catch(SQLException e) {
+                   JOptionPane.showMessageDialog(null, "gagal"+e);
+               }
+               
+               try {
+                    String sqlAmountEntries = "SELECT SUM(amount) as amount FROM entries where product_code = '" + product_code + "';";
+                    Statement statAmountEntries = conn.createStatement();
+                    ResultSet rs = statAmountEntries.executeQuery(sqlAmountEntries);
+                    if(rs.next()) {
+                      amountEntries = rs.getInt("amount");
+                      System.out.println(amountEntries);
+                    }
+               } catch(SQLException e) {
+                   JOptionPane.showMessageDialog(null, "data gagal dipanggil"+e);
+               }
+               
+               int stock = amountEntries - amountTrx;
+               
+               if(stock == 0) {
+                   JOptionPane.showMessageDialog(null, "stok habis");
+               } else if(stock - Integer.parseInt(amount.getText()) < 0) {
+                   JOptionPane.showMessageDialog(null, "stok hanya tersisa " + stock);
+               } else {
+//                   get last invoice id            
+                    try {
+                        String sqlLastInvoiceId = "SELECT inv_id, is_done FROM transactions order by created_at desc limit 1";
+                        Statement statLastInvoiceId = conn.createStatement();
+                        ResultSet rs = statLastInvoiceId.executeQuery(sqlLastInvoiceId);
+                        String lastInvoice = "";
+                        String is_done = "";
+                        if(rs.next()) {
+                          lastInvoice = rs.getString("inv_id");
+                          lastInvoice = lastInvoice.substring(lastInvoice.lastIndexOf("-") + 1);
+                          is_done = rs.getString("is_done");
                         }
-                    } else {
-                        // jika tanggal transaksi terakhir tidak sama dengan transaksi hari ini
-                        invNow = "INV-" + dtf.format(now) + "001";
-                    }   
-                } else {
-                    invNow = "INV-" + dtf.format(now) + "001";
-                }
-                String sql = "insert into transactions values(0,?,?,?,?,?,NOW())";
-                PreparedStatement stat = conn.prepareStatement(sql);
-                stat.setString(1, invNow);
-                stat.setString(2, product_code);
-                stat.setString(3, amount.getText());
-                stat.setInt(4, Integer.parseInt(amount.getText()) * price);
-                stat.setString(5, "0");
 
-                stat.executeUpdate();
-                JOptionPane.showMessageDialog(null, "data berhasil disimpan");
-            }
-            catch (SQLException e) {
-                JOptionPane.showMessageDialog(null, "data gagal disimpan"+e);
-            }
+                        int orderToday = 0;
+                        String orderNow = "";
+                        String invNow = "";
+                        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("ddMMyyyy");
+                        LocalDateTime now = LocalDateTime.now();
+
+                        if(lastInvoice != "") {
+                            String dateLastOrder = lastInvoice.substring(0, 8);
+        //                    jika tanggal transaksi terakhir sama dengan transaksi hari ini
+                            if(dateLastOrder.equals(dtf.format(now))) {                        
+        //                      jika transaksi terakhir sudah selesai maka buat invoice + 1
+                                if(is_done.equals("1")) {
+                                orderToday = Integer.valueOf(lastInvoice.substring(lastInvoice.length() - 3));
+                                orderNow = String.format("%03d", orderToday+1);
+                                invNow = "INV-" + dateLastOrder + orderNow;
+
+                                } else {
+            //                      jika transaksi terakhir belum selesai
+                                    orderToday = Integer.valueOf(lastInvoice.substring(lastInvoice.length() - 3));
+                                    orderNow = String.format("%03d", orderToday);
+                                    invNow = "INV-" + dateLastOrder + orderNow;
+                                }
+                            } else {
+                                // jika tanggal transaksi terakhir tidak sama dengan transaksi hari ini
+                                invNow = "INV-" + dtf.format(now) + "001";
+                            }   
+                        } else {
+                            invNow = "INV-" + dtf.format(now) + "001";
+                        }
+                        String sql = "insert into transactions values(0,?,?,?,?,?,NOW())";
+                        PreparedStatement stat = conn.prepareStatement(sql);
+                        stat.setString(1, invNow);
+                        stat.setString(2, product_code);
+                        stat.setString(3, amount.getText());
+                        stat.setInt(4, Integer.parseInt(amount.getText()) * price);
+                        stat.setString(5, "0");
+
+                        stat.executeUpdate();
+                        JOptionPane.showMessageDialog(null, "data berhasil disimpan");
+                    }
+                    catch (SQLException e) {
+                        JOptionPane.showMessageDialog(null, "data gagal disimpan"+e);
+                    }
+                Form form = new Form();
+                form.setVisible(true);
+                dispose();
+               }
         }
-        Form form = new Form();
-        form.setVisible(true);
-        dispose();
     }//GEN-LAST:event_addToCartActionPerformed
 
     private void amountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_amountActionPerformed
@@ -301,6 +359,7 @@ private int typeId, total, price = 0;
     private javax.swing.JButton addToCart;
     private javax.swing.JTextField amount;
     private javax.swing.JButton bcari;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel productName;
     private javax.swing.JTable tblProducts;
