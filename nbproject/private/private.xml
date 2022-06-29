@@ -3,9 +3,21 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/ryans/Documents/NetBeansProjects/koperasi_netbeans/src/Transactions/Add.java</file>
+            <file>file:/C:/Users/ryans/Documents/NetBeansProjects/koperasi_netbeans/src/Reports/Attendance.java</file>
+            <file>file:/C:/Users/ryans/Documents/NetBeansProjects/koperasi_netbeans/src/Reports/Transaction.java</file>
+            <file>file:/C:/Users/ryans/Documents/NetBeansProjects/koperasi_netbeans/src/Reports/transactions_report.jrxml</file>
+            <file>file:/C:/Users/ryans/Documents/NetBeansProjects/koperasi_netbeans/src/Reports/attendances_report.jrxml</file>
+            <file>file:/C:/Users/ryans/Documents/NetBeansProjects/koperasi_netbeans/src/Reports/suppliers.jrxml</file>
+            <file>file:/C:/Users/ryans/Documents/NetBeansProjects/koperasi_netbeans/src/Entries/CreateEntries.java</file>
             <file>file:/C:/Users/ryans/Documents/NetBeansProjects/koperasi_netbeans/src/Koneksi/Koneksi.java</file>
             <file>file:/C:/Users/ryans/Documents/NetBeansProjects/koperasi_netbeans/src/Transactions/Form.java</file>
+            <file>file:/C:/Users/ryans/Documents/NetBeansProjects/koperasi_netbeans/src/Reports/products_stock_report.jrxml</file>
+            <file>file:/C:/Users/ryans/Documents/NetBeansProjects/koperasi_netbeans/src/Transactions/Add.java</file>
+            <file>file:/C:/Users/ryans/Documents/NetBeansProjects/koperasi_netbeans/src/Suppliers/ReadSuppliers.java</file>
+            <file>file:/C:/Users/ryans/Documents/NetBeansProjects/koperasi_netbeans/src/Products/ReadProducts.java</file>
+            <file>file:/C:/Users/ryans/Documents/NetBeansProjects/koperasi_netbeans/src/koperasi/MainMenu.java</file>
+            <file>file:/C:/Users/ryans/Documents/NetBeansProjects/koperasi_netbeans/src/Reports/Entry.java</file>
+            <file>file:/C:/Users/ryans/Documents/NetBeansProjects/koperasi_netbeans/src/Reports/entries_report.jrxml</file>
         </group>
     </open-files>
 </project-private>

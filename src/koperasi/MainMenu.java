@@ -12,14 +12,24 @@ import Entries.ReadEntries;
 import Products.ReadProducts;
 import Suppliers.ReadSuppliers;
 import Categories.ReadCategories;
+import Koneksi.Koneksi;
+import Reports.Attendance;
+import Reports.Entry;
+import Reports.Transaction;
 import Transactions.Form;
+import java.sql.Connection;
+import java.util.HashMap;
 import javax.swing.JOptionPane;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.view.JasperViewer;
 
 /**
  *
  * @author ryans
  */
 public class MainMenu extends javax.swing.JFrame {
+private Connection conn = new Koneksi().getConnection();
 
     /**
      * Creates new form MainMenu
@@ -58,6 +68,12 @@ public class MainMenu extends javax.swing.JFrame {
         menuTransactions = new javax.swing.JMenuItem();
         menuEntries = new javax.swing.JMenuItem();
         menuAttendances = new javax.swing.JMenu();
+        jMenu1 = new javax.swing.JMenu();
+        menuAttendanceReport = new javax.swing.JMenuItem();
+        menuTrxReport = new javax.swing.JMenuItem();
+        menuEntryReport = new javax.swing.JMenuItem();
+        menuStockReport = new javax.swing.JMenuItem();
+        menuSupplierReport = new javax.swing.JMenuItem();
         menuLogout = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -162,6 +178,50 @@ public class MainMenu extends javax.swing.JFrame {
         });
         jMenuBar2.add(menuAttendances);
 
+        jMenu1.setText("Laporan");
+
+        menuAttendanceReport.setText("Kehadiran");
+        menuAttendanceReport.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuAttendanceReportActionPerformed(evt);
+            }
+        });
+        jMenu1.add(menuAttendanceReport);
+
+        menuTrxReport.setText("Transaksi");
+        menuTrxReport.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuTrxReportActionPerformed(evt);
+            }
+        });
+        jMenu1.add(menuTrxReport);
+
+        menuEntryReport.setText("Barang Masuk");
+        menuEntryReport.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuEntryReportActionPerformed(evt);
+            }
+        });
+        jMenu1.add(menuEntryReport);
+
+        menuStockReport.setText("Stok Barang");
+        menuStockReport.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuStockReportActionPerformed(evt);
+            }
+        });
+        jMenu1.add(menuStockReport);
+
+        menuSupplierReport.setText("Data Supplier");
+        menuSupplierReport.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuSupplierReportActionPerformed(evt);
+            }
+        });
+        jMenu1.add(menuSupplierReport);
+
+        jMenuBar2.add(jMenu1);
+
         menuLogout.setText("Logout");
         menuLogout.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -260,6 +320,66 @@ public class MainMenu extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_menuSuppliersActionPerformed
 
+    private void menuAttendanceReportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuAttendanceReportActionPerformed
+        if(Session.getRole().equals("admin")) {
+            Attendance attendance = new Attendance();
+            attendance.setVisible(true);
+            dispose();
+        } else {
+            JOptionPane.showMessageDialog(null, "Akses tidak diizinkan");
+        }
+    }//GEN-LAST:event_menuAttendanceReportActionPerformed
+
+    private void menuEntryReportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuEntryReportActionPerformed
+        if(Session.getRole().equals("admin")) {
+            Entry entry = new Entry();
+            entry.setVisible(true);
+            dispose();
+        } else {
+            JOptionPane.showMessageDialog(null, "Akses tidak diizinkan");
+        }
+    }//GEN-LAST:event_menuEntryReportActionPerformed
+
+    private void menuTrxReportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuTrxReportActionPerformed
+        if(Session.getRole().equals("admin")) {
+            Transaction transaction = new Transaction();
+            transaction.setVisible(true);
+            dispose();
+        } else {
+            JOptionPane.showMessageDialog(null, "Akses tidak diizinkan");
+        }
+    }//GEN-LAST:event_menuTrxReportActionPerformed
+
+    private void menuStockReportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuStockReportActionPerformed
+        if(Session.getRole().equals("admin")) {
+            try {
+                String path = "./src/Reports/products_stock_report.jasper";
+                HashMap parameter = new HashMap();
+                JasperPrint print = JasperFillManager.fillReport(path, parameter, conn);
+                JasperViewer.viewReport(print, false);
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(rootPane, "Dokumen tidak ada " + ex);
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Akses tidak diizinkan");
+        }
+    }//GEN-LAST:event_menuStockReportActionPerformed
+
+    private void menuSupplierReportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuSupplierReportActionPerformed
+        if(Session.getRole().equals("admin")) {
+            try {
+                String path = "./src/Reports/suppliers_report.jasper";
+                HashMap parameter = new HashMap();
+                JasperPrint print = JasperFillManager.fillReport(path, parameter, conn);
+                JasperViewer.viewReport(print, false);
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(rootPane, "Dokumen tidak ada " + ex);
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Akses tidak diizinkan");
+        }
+    }//GEN-LAST:event_menuSupplierReportActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -303,17 +423,23 @@ public class MainMenu extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu4;
     private javax.swing.JMenuBar jMenuBar2;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JMenuItem menuAttendanceReport;
     private javax.swing.JMenu menuAttendances;
     private javax.swing.JMenuItem menuEmployees;
     private javax.swing.JMenuItem menuEntries;
+    private javax.swing.JMenuItem menuEntryReport;
     private javax.swing.JMenu menuLogout;
     private javax.swing.JMenuItem menuProducts;
+    private javax.swing.JMenuItem menuStockReport;
+    private javax.swing.JMenuItem menuSupplierReport;
     private javax.swing.JMenuItem menuSuppliers;
     private javax.swing.JMenuItem menuTransactionTypes;
     private javax.swing.JMenuItem menuTransactions;
+    private javax.swing.JMenuItem menuTrxReport;
     // End of variables declaration//GEN-END:variables
 }

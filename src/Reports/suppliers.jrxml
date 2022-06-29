@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="f0a05815-3a2d-4b24-a567-ba2131150f1d">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString>
+		<![CDATA[SELECT s.name, s.phone, s.address, 
+COUNT(DISTINCT(e.product_code)) 
+from suppliers s INNER JOIN entries e ON e.supplier_id = s.id group by s.id;]]>
+	</queryString>
+	<field name="name" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="phone" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="address" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="COUNT(DISTINCT(e.product_code))" class="java.lang.Long"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="555" height="79" uuid="8edbe8e2-e6d5-4ca8-943e-7cf3750bd671"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="28"/>
+				</textElement>
+				<text><![CDATA[Laporan Data Supplier]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="30" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="10" width="126" height="20" uuid="bed1ebda-12b2-4618-b612-2129fa66c6e1"/>
+				<text><![CDATA[Nama]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="126" y="10" width="124" height="20" uuid="ec914b1e-a6b7-48ca-b54f-324fcd85a48e"/>
+				<text><![CDATA[Nomor HP]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="250" y="10" width="171" height="20" uuid="b3dff274-d28c-4467-85ef-0340d8bd1df5"/>
+				<text><![CDATA[Alamat]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="421" y="10" width="134" height="20" uuid="7cdf3520-d2db-4efd-84bf-462266ab6470"/>
+				<text><![CDATA[Jumlah Produk yang Dibeli]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="30" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="10" width="126" height="20" uuid="8ac9a39f-f018-48b5-9210-d89b1e4aaf20"/>
+				<textFieldExpression><![CDATA[$F{name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="126" y="10" width="124" height="20" uuid="8d3c784d-f7eb-4d5e-af2d-10f1debf88f4"/>
+				<textFieldExpression><![CDATA[$F{phone}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="250" y="10" width="171" height="20" uuid="407c7328-651e-47dd-80ab-f00e25ba1eed"/>
+				<textFieldExpression><![CDATA[$F{address}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="421" y="10" width="134" height="20" uuid="866bc0c2-7a3d-4f86-9661-0c577b64c937"/>
+				<textFieldExpression><![CDATA[$F{COUNT(DISTINCT(e.product_code))}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="a1de9a40-c526-4865-95c2-5972c1776394">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="selected_date" class="java.lang.String"/>
+	<parameter name="date_start" class="java.lang.String"/>
+	<parameter name="date_end" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT t.inv_id, SUM(t.total), t.created_at FROM transactions t INNER JOIN products p ON t.product_code = p.product_code WHERE t.created_at between $P{date_start} and $P{date_end} group by t.inv_id;]]>
+	</queryString>
+	<field name="inv_id" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="SUM(t.total)" class="java.math.BigDecimal"/>
+	<field name="created_at" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<variable name="total" class="java.lang.Number">
+		<variableExpression><![CDATA[$F{SUM(t.total)}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="555" height="79" uuid="3da909db-e368-4116-80a7-a861f42c2ec2"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="28"/>
+				</textElement>
+				<text><![CDATA[Laporan Penjualan]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="555" height="35" uuid="0d14cd19-4f6e-4311-9d00-601d9b03d10f"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="16"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{selected_date}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="61" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="41" width="100" height="20" uuid="477ddbc5-57f0-4996-80fc-1f9c301dcb32"/>
+				<text><![CDATA[Kode Invoice]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="170" y="41" width="100" height="20" uuid="4f5a3750-ce19-4a36-9dea-d67f781882ad"/>
+				<text><![CDATA[Total]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="417" y="41" width="100" height="20" uuid="70756298-c2f3-44ed-81f4-5cb62dc1c8ec"/>
+				<text><![CDATA[Tanggal]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="198" y="2" width="100" height="20" uuid="64acbbaf-c842-4e28-a85e-9f9b49fdb189"/>
+				<text><![CDATA[SUM(t.total)]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="28" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="8" width="170" height="20" uuid="65aba8eb-e932-4992-99ab-11643aaeda0e"/>
+				<textFieldExpression><![CDATA[$F{inv_id}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="417" y="8" width="138" height="20" uuid="f1a10d20-9b4d-4e1a-a277-94ecb08a8a0f"/>
+				<textFieldExpression><![CDATA[$F{created_at}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="170" y="8" width="247" height="20" uuid="7e066aa8-bd66-4d49-a437-dfb51e542983"/>
+				<textFieldExpression><![CDATA[$F{SUM(t.total)}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>
