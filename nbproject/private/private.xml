@@ -5,19 +5,23 @@
         <group>
             <file>file:/C:/Users/ryans/Documents/NetBeansProjects/koperasi_netbeans/src/Reports/Attendance.java</file>
             <file>file:/C:/Users/ryans/Documents/NetBeansProjects/koperasi_netbeans/src/Reports/Transaction.java</file>
-            <file>file:/C:/Users/ryans/Documents/NetBeansProjects/koperasi_netbeans/src/Reports/transactions_report.jrxml</file>
-            <file>file:/C:/Users/ryans/Documents/NetBeansProjects/koperasi_netbeans/src/Reports/attendances_report.jrxml</file>
-            <file>file:/C:/Users/ryans/Documents/NetBeansProjects/koperasi_netbeans/src/Reports/suppliers.jrxml</file>
             <file>file:/C:/Users/ryans/Documents/NetBeansProjects/koperasi_netbeans/src/Entries/CreateEntries.java</file>
+            <file>file:/C:/Users/ryans/Documents/NetBeansProjects/koperasi_netbeans/src/Attendance/Today.java</file>
             <file>file:/C:/Users/ryans/Documents/NetBeansProjects/koperasi_netbeans/src/Koneksi/Koneksi.java</file>
             <file>file:/C:/Users/ryans/Documents/NetBeansProjects/koperasi_netbeans/src/Transactions/Form.java</file>
-            <file>file:/C:/Users/ryans/Documents/NetBeansProjects/koperasi_netbeans/src/Reports/products_stock_report.jrxml</file>
+            <file>file:/C:/Users/ryans/Documents/NetBeansProjects/koperasi_netbeans/src/koperasi/Koperasi.java</file>
+            <file>file:/C:/Users/ryans/Documents/NetBeansProjects/koperasi_netbeans/src/Auth/Login.java</file>
+            <file>file:/C:/Users/ryans/Documents/NetBeansProjects/koperasi_netbeans/src/Categories/CreateCategories.java</file>
+            <file>file:/C:/Users/ryans/Documents/NetBeansProjects/koperasi_netbeans/src/Categories/UpdateCategories.java</file>
             <file>file:/C:/Users/ryans/Documents/NetBeansProjects/koperasi_netbeans/src/Transactions/Add.java</file>
             <file>file:/C:/Users/ryans/Documents/NetBeansProjects/koperasi_netbeans/src/Suppliers/ReadSuppliers.java</file>
             <file>file:/C:/Users/ryans/Documents/NetBeansProjects/koperasi_netbeans/src/Products/ReadProducts.java</file>
             <file>file:/C:/Users/ryans/Documents/NetBeansProjects/koperasi_netbeans/src/koperasi/MainMenu.java</file>
+            <file>file:/C:/Users/ryans/Documents/NetBeansProjects/koperasi_netbeans/src/Employees/ReadEmployees.java</file>
             <file>file:/C:/Users/ryans/Documents/NetBeansProjects/koperasi_netbeans/src/Reports/Entry.java</file>
-            <file>file:/C:/Users/ryans/Documents/NetBeansProjects/koperasi_netbeans/src/Reports/entries_report.jrxml</file>
+            <file>file:/C:/Users/ryans/Documents/NetBeansProjects/koperasi_netbeans/src/Entries/ReadEntries.java</file>
+            <file>file:/C:/Users/ryans/Documents/NetBeansProjects/koperasi_netbeans/src/Categories/ReadCategories.java</file>
+            <file>file:/C:/Users/ryans/Documents/NetBeansProjects/koperasi_netbeans/src/Entries/UpdateEntries.java</file>
         </group>
     </open-files>
 </project-private>

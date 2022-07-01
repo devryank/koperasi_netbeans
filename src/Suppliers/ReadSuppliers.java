@@ -12,6 +12,7 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import Koneksi.Koneksi;
 import java.sql.*;
+import koperasi.MainMenu;
 /**
  *
  * @author Lenovo
@@ -218,7 +219,9 @@ private int id = 0;
     }// </editor-fold>//GEN-END:initComponents
 
     private void bkeluarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bkeluarActionPerformed
+        MainMenu home = new MainMenu();
         dispose();
+        home.setVisible(true);
     }//GEN-LAST:event_bkeluarActionPerformed
 
     private void bcariActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bcariActionPerformed

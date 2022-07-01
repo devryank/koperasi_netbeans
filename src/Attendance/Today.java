@@ -10,6 +10,7 @@ import java.sql.*;
 import java.text.SimpleDateFormat;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import koperasi.MainMenu;
 
 /**
  *
@@ -208,7 +209,9 @@ private int id = 0;
     }//GEN-LAST:event_tblEntryMouseClicked
 
     private void bkeluarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bkeluarActionPerformed
+        MainMenu home = new MainMenu();
         dispose();
+        home.setVisible(true);
     }//GEN-LAST:event_bkeluarActionPerformed
 
     private void btnCheckActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCheckActionPerformed

@@ -11,6 +11,7 @@ import javax.swing.table.DefaultTableModel;
 
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
+import koperasi.MainMenu;
 
 /**
  *
@@ -94,6 +95,7 @@ private String inv_id = "";
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
+        bkeluar = new javax.swing.JButton();
         add = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblTransactions = new javax.swing.JTable();
@@ -103,10 +105,21 @@ private String inv_id = "";
         totalHarga = new javax.swing.JLabel();
         btnConfirm = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
+        bclear = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel1.setBackground(new java.awt.Color(223, 230, 233));
+
+        bkeluar.setBackground(new java.awt.Color(41, 128, 185));
+        bkeluar.setForeground(new java.awt.Color(255, 255, 255));
+        bkeluar.setText("Keluar");
+        bkeluar.setName("bkeluar"); // NOI18N
+        bkeluar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bkeluarActionPerformed(evt);
+            }
+        });
 
         add.setBackground(new java.awt.Color(41, 128, 185));
         add.setForeground(new java.awt.Color(255, 255, 255));
@@ -165,6 +178,16 @@ private String inv_id = "";
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setText("Transaksi");
 
+        bclear.setBackground(new java.awt.Color(41, 128, 185));
+        bclear.setForeground(new java.awt.Color(255, 255, 255));
+        bclear.setText("Bersihkan");
+        bclear.setName("bkeluar"); // NOI18N
+        bclear.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bclearActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -181,7 +204,10 @@ private String inv_id = "";
                         .addGap(18, 18, 18)
                         .addComponent(bcari))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(bkeluar)
+                        .addGap(18, 18, 18)
+                        .addComponent(bclear)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel1)
@@ -195,20 +221,23 @@ private String inv_id = "";
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 14, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(add, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtcari, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(bcari))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(11, 11, 11)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(totalHarga))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnConfirm, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(7, 7, 7))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnConfirm, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(bkeluar)
+                    .addComponent(bclear))
+                .addGap(100, 100, 100))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -219,7 +248,9 @@ private String inv_id = "";
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 424, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 80, Short.MAX_VALUE))
         );
 
         pack();
@@ -265,6 +296,29 @@ private String inv_id = "";
         datatable();
     }//GEN-LAST:event_btnConfirmActionPerformed
 
+    private void bkeluarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bkeluarActionPerformed
+        MainMenu home = new MainMenu();
+        dispose();
+        home.setVisible(true);
+    }//GEN-LAST:event_bkeluarActionPerformed
+
+    private void bclearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bclearActionPerformed
+        int ok = JOptionPane.showConfirmDialog(null, "Yakin ingin menghapus transaksi sekarang?", "konfirmasi dialog", JOptionPane.YES_NO_OPTION);    
+        if(ok == 0) {
+            String sql = "delete from transactions where is_done='0'";
+            try {
+                PreparedStatement stat = conn.prepareStatement(sql);
+                stat.executeUpdate();
+                JOptionPane.showMessageDialog(null, "data berhasil dihapus");
+            }
+            catch(SQLException e) {
+                JOptionPane.showMessageDialog(null, "data gagal dihapus"+e);
+            }
+            datatable();
+            totalHarga.setText("Rp.0");
+        }
+    }//GEN-LAST:event_bclearActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -303,6 +357,8 @@ private String inv_id = "";
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton add;
     private javax.swing.JButton bcari;
+    private javax.swing.JButton bclear;
+    private javax.swing.JButton bkeluar;
     private javax.swing.JButton btnConfirm;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

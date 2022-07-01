@@ -64,6 +64,7 @@ private Connection conn = new Koneksi().getConnection();
         menuEmployees = new javax.swing.JMenuItem();
         menuTransactionTypes = new javax.swing.JMenuItem();
         menuSuppliers = new javax.swing.JMenuItem();
+        menuCategories = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
         menuTransactions = new javax.swing.JMenuItem();
         menuEntries = new javax.swing.JMenuItem();
@@ -147,6 +148,14 @@ private Connection conn = new Koneksi().getConnection();
             }
         });
         jMenu3.add(menuSuppliers);
+
+        menuCategories.setText("Kategori");
+        menuCategories.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuCategoriesActionPerformed(evt);
+            }
+        });
+        jMenu3.add(menuCategories);
 
         jMenuBar2.add(jMenu3);
 
@@ -380,6 +389,16 @@ private Connection conn = new Koneksi().getConnection();
         }
     }//GEN-LAST:event_menuSupplierReportActionPerformed
 
+    private void menuCategoriesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuCategoriesActionPerformed
+        if(Session.getRole().equals("admin")) {
+            ReadCategories categories = new ReadCategories();
+            categories.setVisible(true);
+            dispose();
+        } else {
+            JOptionPane.showMessageDialog(null, "Akses tidak diizinkan");
+        }
+    }//GEN-LAST:event_menuCategoriesActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -430,6 +449,7 @@ private Connection conn = new Koneksi().getConnection();
     private javax.swing.JPanel jPanel1;
     private javax.swing.JMenuItem menuAttendanceReport;
     private javax.swing.JMenu menuAttendances;
+    private javax.swing.JMenuItem menuCategories;
     private javax.swing.JMenuItem menuEmployees;
     private javax.swing.JMenuItem menuEntries;
     private javax.swing.JMenuItem menuEntryReport;
