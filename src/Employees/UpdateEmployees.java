@@ -187,7 +187,7 @@ private int id = 0;
             }
         });
 
-        listRole.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "admin", "employee" }));
+        listRole.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "admin", "cashier" }));
 
         jLabel5.setForeground(new java.awt.Color(41, 128, 185));
         jLabel5.setText("Jabatan");
@@ -233,7 +233,7 @@ private int id = 0;
                                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                         .addComponent(listRole, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(0, 348, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(

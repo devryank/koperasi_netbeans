@@ -62,7 +62,6 @@ private Connection conn = new Koneksi().getConnection();
         jMenu3 = new javax.swing.JMenu();
         menuProducts = new javax.swing.JMenuItem();
         menuEmployees = new javax.swing.JMenuItem();
-        menuTransactionTypes = new javax.swing.JMenuItem();
         menuSuppliers = new javax.swing.JMenuItem();
         menuCategories = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
@@ -132,14 +131,6 @@ private Connection conn = new Koneksi().getConnection();
             }
         });
         jMenu3.add(menuEmployees);
-
-        menuTransactionTypes.setText("Tipe Transaksi");
-        menuTransactionTypes.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menuTransactionTypesActionPerformed(evt);
-            }
-        });
-        jMenu3.add(menuTransactionTypes);
 
         menuSuppliers.setText("Supplier");
         menuSuppliers.addActionListener(new java.awt.event.ActionListener() {
@@ -263,16 +254,6 @@ private Connection conn = new Koneksi().getConnection();
         dispose();
     }//GEN-LAST:event_menuProductsActionPerformed
 
-    private void menuTransactionTypesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuTransactionTypesActionPerformed
-        if(Session.getRole().equals("admin")) {
-            ReadCategories transactionTypes = new ReadCategories();
-            transactionTypes.setVisible(true);
-            dispose();
-        } else {
-            JOptionPane.showMessageDialog(null, "Akses tidak diizinkan");
-        }
-    }//GEN-LAST:event_menuTransactionTypesActionPerformed
-
     private void menuAttendancesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuAttendancesMouseClicked
         if(Session.getRole().equals("admin")){
             Today today = new Today();
@@ -362,7 +343,7 @@ private Connection conn = new Koneksi().getConnection();
     private void menuStockReportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuStockReportActionPerformed
         if(Session.getRole().equals("admin")) {
             try {
-                String path = "./src/Reports/products_stock_report.jasper";
+                String path = System.getProperty("user.home") + "/Documents/NetBeansProjects/koperasi_netbeans/src/Reports/products_stock_report.jasper";
                 HashMap parameter = new HashMap();
                 JasperPrint print = JasperFillManager.fillReport(path, parameter, conn);
                 JasperViewer.viewReport(print, false);
@@ -377,7 +358,7 @@ private Connection conn = new Koneksi().getConnection();
     private void menuSupplierReportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuSupplierReportActionPerformed
         if(Session.getRole().equals("admin")) {
             try {
-                String path = "./src/Reports/suppliers_report.jasper";
+                String path = System.getProperty("user.home") + "/Documents/NetBeansProjects/koperasi_netbeans/src/Reports/suppliers.jasper";
                 HashMap parameter = new HashMap();
                 JasperPrint print = JasperFillManager.fillReport(path, parameter, conn);
                 JasperViewer.viewReport(print, false);
@@ -458,7 +439,6 @@ private Connection conn = new Koneksi().getConnection();
     private javax.swing.JMenuItem menuStockReport;
     private javax.swing.JMenuItem menuSupplierReport;
     private javax.swing.JMenuItem menuSuppliers;
-    private javax.swing.JMenuItem menuTransactionTypes;
     private javax.swing.JMenuItem menuTransactions;
     private javax.swing.JMenuItem menuTrxReport;
     // End of variables declaration//GEN-END:variables

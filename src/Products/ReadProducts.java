@@ -268,7 +268,7 @@ private String id = "";
         if(id != "") {
             int ok = JOptionPane.showConfirmDialog(null, "Yakin ingin menghapus id " + id + " ?", "konfirmasi dialog", JOptionPane.YES_NO_OPTION);    
            if(ok == 0) {
-               String sql = "delete from products where id='"+id+"'";
+               String sql = "delete from products where product_code='"+id+"'";
                try {
                    PreparedStatement stat = conn.prepareStatement(sql);
                    stat.executeUpdate();

@@ -16,6 +16,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.sql.*;
+import java.text.SimpleDateFormat;
 import java.util.UUID;
 import javax.imageio.ImageIO;
 import javax.swing.DefaultComboBoxModel;
@@ -56,6 +57,28 @@ private String id = "";
                     listTypes.addItem(type);
                 }
             }
+            
+            try {
+                String getProductById = "SELECT * FROM products where product_code like '%"+id+"%'";
+                Statement stat2 = conn.createStatement();
+                ResultSet rsGetProductById = stat2.executeQuery(getProductById);
+                if(rsGetProductById.next()) {
+                    String category = "";
+                    try {
+                        String searchName = "SELECT name FROM categories where id like '%"+rsGetProductById.getString("category_id")+"%'";
+                        Statement statementSearchName = conn.createStatement();
+                        ResultSet rsSearchName = statementSearchName.executeQuery(searchName);
+                        if(rsSearchName.next()) {
+                            category = rsSearchName.getString(1);
+                        }
+                    } catch(Exception e) {
+                        JOptionPane.showMessageDialog(null, "data gagal dipanggil"+e);
+                    }    
+                    listTypes.setSelectedItem(category);
+                }
+            } catch(Exception e) {
+                JOptionPane.showMessageDialog(null, "data gagal dipanggil"+e);
+            }    
         } catch(Exception e) {
             JOptionPane.showMessageDialog(null, "data gagal dipanggil"+e);
         }    
@@ -178,7 +201,7 @@ private String id = "";
         jLabel2.setPreferredSize(new java.awt.Dimension(150, 150));
 
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel4.setText("Tipe");
+        jLabel4.setText("Kategori");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -206,7 +229,7 @@ private String id = "";
                                 .addGap(18, 18, 18)
                                 .addComponent(btnBatal))
                             .addComponent(listTypes, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 226, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 213, Short.MAX_VALUE)
                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
@@ -217,9 +240,7 @@ private String id = "";
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(45, 45, 45)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(name, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -261,7 +282,7 @@ private String id = "";
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
         
-        String sql = "update products set name=?, type_id=?, image=?, price=? where product_code = '"+this.id+"'";
+        String sql = "update products set name=?, category_id=?, image=?, price=? where product_code = '"+this.id+"'";
         try {
             String sqlSearchId = "SELECT id FROM categories where name like '%"+listTypes.getSelectedItem()+"%'";
             Statement statId = conn.createStatement();

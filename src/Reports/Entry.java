@@ -129,7 +129,7 @@ private Connection conn = new Koneksi().getConnection();
         String date_end = String.valueOf(YearMonth.now().getYear() + "/" + selected_month + "/" + last_day);
 
         try {
-            String path = "./src/Reports/entries_report.jasper";
+            String path = System.getProperty("user.home") + "/Documents/NetBeansProjects/koperasi_netbeans/src/Reports/entries_report.jasper";
             HashMap parameter = new HashMap();
             parameter.put("selected_date", selected_date);
             parameter.put("date_start", date_start);

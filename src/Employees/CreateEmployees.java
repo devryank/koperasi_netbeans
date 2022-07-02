@@ -164,7 +164,7 @@ private Path copy,files;
         jLabel5.setForeground(new java.awt.Color(41, 128, 185));
         jLabel5.setText("Jabatan");
 
-        listRole.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "admin", "employee" }));
+        listRole.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "admin", "cashier" }));
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);

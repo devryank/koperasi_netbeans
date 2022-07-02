@@ -75,7 +75,7 @@
                               </Group>
                               <Component id="listTypes" alignment="0" min="-2" pref="155" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace pref="226" max="32767" attributes="0"/>
+                          <EmptySpace pref="213" max="32767" attributes="0"/>
                           <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
@@ -227,7 +227,7 @@
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Tipe"/>
+            <Property name="text" type="java.lang.String" value="Kategori"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JComboBox" name="listTypes">
